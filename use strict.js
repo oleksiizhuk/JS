@@ -30,31 +30,3 @@
 // obj.x = 43; // TypeError: Cannot assign to read only property 'x' of object
 //
 
-const fs = {
-  readFile (path, cb) {
-    let text = 'a'
-     setTimeout(() => {
-       text = 'text'
-       cb('text')
-       console.log('setTimeout');
-     }, 2000)
-  }
-}
-
-// console.log(1)
-// fs.readFile('', (fileContent) => {
-//   console.log('fileContent ', fileContent);
-// })
-
-const readFilePromise = (path) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, (fileContent) => {
-      resolve(fileContent)
-    })
-  })
-}
-
-readFilePromise().then((res) => {
-  console.log('res = ', res);
-})
-
