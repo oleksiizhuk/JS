@@ -33,6 +33,7 @@ import Classes from "./topics/js/Classes.jsx";
 import Collections from "./topics/js/Collections.jsx";
 import Iterators from "./topics/js/Iterators.jsx";
 import PromisesErrors from "./topics/js/PromisesErrors.jsx";
+import Modules from "./topics/js/Modules.jsx";
 
 import SuspenseLazy from "./topics/SuspenseLazy.jsx";
 import Concurrent from "./topics/Concurrent.jsx";
@@ -70,6 +71,7 @@ import DesignPatterns from "./topics/enginx/DesignPatterns.jsx";
 import Antipatterns from "./topics/enginx/Antipatterns.jsx";
 import CiCd from "./topics/enginx/CiCd.jsx";
 import Owasp from "./topics/enginx/Owasp.jsx";
+import HttpAuth from "./topics/enginx/HttpAuth.jsx";
 import CodeReviewTopic from "./topics/enginx/CodeReviewTopic.jsx";
 import CodeReviewTrainer from "./codereview/CodeReviewTrainer.jsx";
 
@@ -97,6 +99,7 @@ const SECTIONS = [
       { id: "classes", title: "Классы", title_en: "Classes", C: Classes },
       { id: "collections", title: "Map / Set / WeakMap", C: Collections },
       { id: "iterators", title: "Итераторы и генераторы", title_en: "Iterators & generators", C: Iterators },
+      { id: "modules", title: "Модули: ESM vs CJS", title_en: "Modules: ESM vs CJS", C: Modules },
     ],
   },
   {
@@ -171,6 +174,7 @@ const SECTIONS = [
       { id: "ex-antipatterns", title: "Antipatterns", C: Antipatterns },
       { id: "ex-cicd", title: "CI/CD/CD", C: CiCd },
       { id: "ex-owasp", title: "OWASP", C: Owasp },
+      { id: "ex-http", title: "HTTP, кэш и авторизация", title_en: "HTTP, caching & auth", C: HttpAuth },
       { id: "ex-codereview", title: "Code review ⭐", C: CodeReviewTopic },
     ],
   },

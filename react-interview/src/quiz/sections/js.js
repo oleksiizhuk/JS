@@ -1226,4 +1226,73 @@ export const JS_QUESTIONS = [
       e: "try/catch only works within its own synchronous call stack (or with await). Callbacks need their own try/catch, and promises need .catch.",
     },
   },
+  {
+    t: "JS · Модули",
+    q: "ESM-модуль: export let count = 0; export const inc = () => { count++ }.\nИмпортёр вызывает inc(). Что он увидит в count?",
+    o: [
+      "1 — экспорт ESM это live binding: импортёр видит актуальное значение",
+      "0 — при импорте была снята копия значения на момент экспорта",
+      "undefined — примитив let нельзя экспортировать, только объекты",
+      "ReferenceError — count изменён вне модуля-владельца, это запрещено",
+    ],
+    a: 0,
+    e: "Экспортируется ИМЯ, а не значение: импортёр читает живую ссылку. В CommonJS exports.count = count отдал бы копию, и импортёр остался бы с 0 — классический вопрос на разницу систем.",
+    en: {
+      t: "JS · Modules",
+      q: "An ESM module: export let count = 0; export const inc = () => { count++ }.\nThe importer calls inc(). What does it see in count?",
+      o: [
+        "1 — an ESM export is a live binding: the importer sees the current value",
+        "0 — a copy of the value was taken at export time during the import",
+        "undefined — a let primitive can't be exported, only objects can",
+        "ReferenceError — count was changed outside the owning module, forbidden",
+      ],
+      e: "The NAME is exported, not the value: the importer reads a live reference. In CommonJS exports.count = count would hand out a copy and the importer would be stuck with 0 — the classic systems-difference question.",
+    },
+  },
+  {
+    t: "JS · Модули",
+    q: "За счёт чего работает tree shaking?",
+    o: [
+      "Импорты ESM статические: бандлер строит граф до выполнения и видит неиспользуемое",
+      "Бандлер запускает код в песочнице и замеряет, какие функции реально вызывались",
+      "Минификатор вырезает любой код, на который не нашлось ссылок в строках",
+      "V8 в рантайме выгружает функции, которые долго не вызывались из бандла",
+    ],
+    a: 0,
+    e: "Ключ — статичность ESM: import/export объявлены на верхнем уровне и анализируются без выполнения. С динамическим require так нельзя. Поэтому default-объект export default { a, b } шейкинг ломает.",
+    en: {
+      t: "JS · Modules",
+      q: "What makes tree shaking possible?",
+      o: [
+        "ESM imports are static: the bundler builds the graph before execution and sees what's unused",
+        "The bundler runs the code in a sandbox and measures which functions actually got called",
+        "The minifier strips any code that has no references found in string literals",
+        "V8 unloads functions from the bundle at runtime once they go uncalled for long enough",
+      ],
+      e: "The key is ESM's static nature: import/export are declared at the top level and analyzed without running the code. Dynamic require can't offer that. That's also why export default { a, b } breaks shaking.",
+    },
+  },
+  {
+    t: "JS · Модули",
+    q: "Нужно грузить тяжёлый модуль только по клику. Как правильно?",
+    o: [
+      "const mod = await import(\"./heavy.js\") внутри обработчика клика",
+      "Обернуть import { heavy } from \"./heavy.js\" в if внутри обработчика",
+      "Вынести import в setTimeout — модуль загрузится после первого рендера",
+      "Прописать модуль в lazy-секции package.json — бандлер отложит его сам",
+    ],
+    a: 0,
+    e: "Статический import в if — SyntaxError: он объявляется только на верхнем уровне. Динамический import() возвращает промис и создаёт отдельный чанк (code splitting); в React поверх этого работает lazy + Suspense.",
+    en: {
+      t: "JS · Modules",
+      q: "You need to load a heavy module only on click. What's the right way?",
+      o: [
+        "const mod = await import(\"./heavy.js\") inside the click handler",
+        "Wrapping import { heavy } from \"./heavy.js\" in an if inside the handler",
+        "Moving the import into a setTimeout so the module loads after first render",
+        "Listing the module in a lazy section of package.json so the bundler defers it",
+      ],
+      e: "A static import inside an if is a SyntaxError: it's only allowed at the top level. Dynamic import() returns a promise and creates a separate chunk (code splitting); in React, lazy + Suspense build on top of it.",
+    },
+  },
 ];

@@ -807,4 +807,73 @@ export const ENGINX_QUESTIONS = [
       e: "Points are a team's internal currency for capacity planning, calibrated only within that team. Comparisons and targets turn them into a KPI — estimates inflate within a quarter.",
     },
   },
+  {
+    t: "EnginX · HTTP",
+    q: "Чем Cache-Control: no-cache отличается от no-store?",
+    o: [
+      "no-cache разрешает кэшировать, но требует ревалидации (ETag → 304); no-store — не хранить вовсе",
+      "Ничем: это синонимы, no-store — просто более новая форма записи",
+      "no-cache запрещает кэш браузера, no-store — запрещает только кэш CDN",
+      "no-cache действует на GET-запросы, а no-store — на POST и мутации",
+    ],
+    a: 0,
+    e: "Самая частая путаница темы. no-cache = «перед использованием спроси сервер» (условный запрос с If-None-Match, дешёвый 304 без тела). no-store = «не сохранять» — для страниц с личными данными.",
+    en: {
+      t: "EnginX · HTTP",
+      q: "How does Cache-Control: no-cache differ from no-store?",
+      o: [
+        "no-cache allows caching but requires revalidation (ETag → 304); no-store forbids storing at all",
+        "Nothing: they're synonyms, no-store is simply the more modern spelling",
+        "no-cache disables the browser cache, while no-store disables only the CDN cache",
+        "no-cache applies to GET requests, while no-store applies to POST and mutations",
+      ],
+      e: "The most common mixup in the topic. no-cache = \"ask the server before using\" (a conditional request with If-None-Match, a cheap bodyless 304). no-store = \"don't persist\" — for pages with personal data.",
+    },
+  },
+  {
+    t: "EnginX · HTTP",
+    q: "fetch POST с заголовком Content-Type: application/json на чужой origin. Что произойдёт перед POST?",
+    o: [
+      "Полетит preflight OPTIONS: application/json — не «простой» заголовок",
+      "Ничего особенного: POST относится к «простым» методам и летит сразу",
+      "Браузер заблокирует запрос сразу — кросс-доменные POST запрещены",
+      "Запрос уйдёт, но браузер вырежет заголовок Content-Type из него",
+    ],
+    a: 0,
+    e: "«Простые» Content-Type: text/plain, form-urlencoded, multipart/form-data. application/json к ним не относится — браузер сначала спросит сервер OPTIONS-ом (Access-Control-Allow-*). Лечится Access-Control-Max-Age, а не отказом от JSON.",
+    en: {
+      t: "EnginX · HTTP",
+      q: "A fetch POST with a Content-Type: application/json header to a foreign origin. What happens before the POST?",
+      o: [
+        "A preflight OPTIONS flies first: application/json is not a \"simple\" header",
+        "Nothing special: POST is one of the \"simple\" methods and goes out immediately",
+        "The browser blocks the request outright — cross-origin POSTs are forbidden",
+        "The request goes out, but the browser strips the Content-Type header from it",
+      ],
+      e: "The \"simple\" Content-Types are text/plain, form-urlencoded and multipart/form-data. application/json isn't one — the browser first asks the server via OPTIONS (Access-Control-Allow-*). The fix is Access-Control-Max-Age, not giving up JSON.",
+    },
+  },
+  {
+    t: "EnginX · HTTP",
+    q: "Где надёжнее всего держать refresh-токен в SPA?",
+    o: [
+      "В httpOnly + Secure + SameSite cookie: JS его не видит, XSS не украдёт",
+      "В localStorage: переживает перезагрузку и доступен из любого кода",
+      "В обычной cookie без флагов: браузер сам приложит её к запросам",
+      "В Redux-сторе: единый источник правды для всего состояния приложения",
+    ],
+    a: 0,
+    e: "localStorage и обычные cookie читаются любым XSS. Схема: access-токен короткоживущий в памяти, refresh — в httpOnly cookie, принимаемой только эндпоинтом /auth/refresh; на 401 — refresh и повтор запроса.",
+    en: {
+      t: "EnginX · HTTP",
+      q: "What's the most reliable place for a refresh token in an SPA?",
+      o: [
+        "An httpOnly + Secure + SameSite cookie: JS can't see it, XSS can't steal it",
+        "localStorage: it survives reloads and is reachable from any code",
+        "A plain cookie with no flags: the browser attaches it to requests itself",
+        "The Redux store: a single source of truth for all application state",
+      ],
+      e: "localStorage and plain cookies are readable by any XSS. The scheme: a short-lived access token in memory, the refresh token in an httpOnly cookie accepted only by /auth/refresh; on 401 — refresh and retry.",
+    },
+  },
 ];
