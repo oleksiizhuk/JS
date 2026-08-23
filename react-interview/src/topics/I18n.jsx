@@ -16,7 +16,8 @@ import {
 
 // Отдельный инстанс i18next ТОЛЬКО для демо на этой странице —
 // не конфликтует ни с чем и не трогает RU/EN-тумблер тренажёра.
-const demoI18n = i18next.createInstance();
+// (экспорт — для регрессионного теста)
+export const demoI18n = i18next.createInstance();
 demoI18n.use(initReactI18next).init({
   lng: "ru",
   fallbackLng: "en",
@@ -71,7 +72,7 @@ function DemoInner() {
         <b>{t("cart", { count })}</b>
       </p>
       <p style={{ margin: "6px 0" }}>
-        {[0, 1, 2, 5, 21, 22, 25].map((n) => (
+        {[0, 1, 1.5, 2, 5, 21, 22, 25].map((n) => (
           <button key={n} className="btn" onClick={() => setCount(n)}>
             {n}
           </button>
@@ -79,8 +80,8 @@ function DemoInner() {
       </p>
       <p className="hint">
         <L
-          ru="Пощёлкай числа на русском: 1 товар / 2 товара / 5 товаров / 21 товар — i18next сам выбирает форму по правилам CLDR (Intl.PluralRules)."
-          en="Click through the numbers in RU: 1 товар / 2 товара / 5 товаров / 21 товар — i18next picks the form itself via CLDR rules (Intl.PluralRules)."
+          ru="Пощёлкай числа на русском: 1 товар / 2 товара / 5 товаров / 21 товар / 1.5 товара (дробные — категория other) — i18next сам выбирает форму по правилам CLDR (Intl.PluralRules)."
+          en="Click through the numbers in RU: 1 товар / 2 товара / 5 товаров / 21 товар / 1.5 товара (fractions hit the other category) — i18next picks the form itself via CLDR rules (Intl.PluralRules)."
         />
       </p>
     </div>
@@ -158,6 +159,7 @@ resources: {
     cart_one:  "В корзине {{count}} товар",    // 1, 21, 31...
     cart_few:  "В корзине {{count}} товара",   // 2-4, 22-24...
     cart_many: "В корзине {{count}} товаров",  // 0, 5-20, 25...
+    cart_other: "В корзине {{count}} товара",  // дробные: 1.5 товара
   }},
   en: { translation: {
     greeting: "Hello, {{name}}!",
@@ -178,6 +180,7 @@ resources: {
     cart_one:  "В корзине {{count}} товар",    // 1, 21, 31...
     cart_few:  "В корзине {{count}} товара",   // 2-4, 22-24...
     cart_many: "В корзине {{count}} товаров",  // 0, 5-20, 25...
+    cart_other: "В корзине {{count}} товара",  // fractions: 1.5 товара
   }},
   en: { translation: {
     greeting: "Hello, {{name}}!",
@@ -212,8 +215,8 @@ i18n.changeLanguage("en");         // subscribers re-render on their own`}
 useTranslation("checkout");        // подгрузит locales/ru/checkout.json
 // (i18next-http-backend), а не весь словарь приложения сразу
 
-// Определение языка: i18next-languagedetector
-// (querystring → cookie → localStorage → navigator.language)
+// Определение языка: i18next-browser-languagedetector
+// (querystring → cookie → localStorage → sessionStorage → navigator → htmlTag)
 
 // Даты/числа/валюты — НЕ переводы, а нативный Intl:
 new Intl.NumberFormat("ru-RU",
@@ -231,8 +234,8 @@ new Intl.RelativeTimeFormat("ru").format(-2, "day");     // "2 дня назад
 useTranslation("checkout");        // loads locales/en/checkout.json
 // (i18next-http-backend) instead of the whole app dictionary at once
 
-// Language detection: i18next-languagedetector
-// (querystring → cookie → localStorage → navigator.language)
+// Language detection: i18next-browser-languagedetector
+// (querystring → cookie → localStorage → sessionStorage → navigator → htmlTag)
 
 // Dates/numbers/currency are NOT translations — they're native Intl:
 new Intl.NumberFormat("en-US",
@@ -357,6 +360,22 @@ new Intl.NumberFormat("de-DE",
 // ✅ i18next-http-backend + namespaces: a language and a page load
 //    on demand; fallbackLng covers not-yet-translated keys`,
               text: "In large apps dictionaries weigh megabytes. Lazy namespaces are the same principle as code splitting: load what's needed right now.",
+            },
+          },
+          {
+            title: "i18n.language может быть «ru-RU», а не «ru»",
+            code: `// с languagedetector язык приходит КАК ОПРЕДЕЛИЛСЯ: "ru-RU", "en-US"
+className={i18n.language === "ru" ? "active" : ""} // ❌ "ru-RU" !== "ru"
+// ✅ для UI — i18n.resolvedLanguage: язык, чьи переводы реально
+//    применились (с учётом fallback и region-кодов)`,
+            text: "В нашем демо lng задан фиксированно, поэтому сравнение честное. В реальном приложении с детектором подсветка кнопок и условия по языку — только через resolvedLanguage. Хороший каверзный вопрос уровня senior.",
+            en: {
+              title: "i18n.language can be \"ru-RU\", not \"ru\"",
+              code: `// with a language detector the language arrives AS DETECTED: "ru-RU", "en-US"
+className={i18n.language === "ru" ? "active" : ""} // ❌ "ru-RU" !== "ru"
+// ✅ for UI use i18n.resolvedLanguage: the language whose translations
+//    actually applied (fallback and region codes accounted for)`,
+              text: "Our demo pins lng, so the strict comparison is honest. In a real app with a detector, button highlighting and per-language conditions go through resolvedLanguage only. A great senior-level trick question.",
             },
           },
         ]}

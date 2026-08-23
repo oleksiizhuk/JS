@@ -1,9 +1,13 @@
 // Регрессия для живого демо i18next на странице i18n:
 // CLDR-формы русского и смена языка должны реально работать.
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 import { LangContext } from "../LangContext.jsx";
-import I18n from "../topics/I18n.jsx";
+import I18n, { demoI18n } from "../topics/I18n.jsx";
+
+// demoI18n — модульный singleton: сбрасываем язык, чтобы тесты
+// не зависели от порядка выполнения
+beforeEach(() => demoI18n.changeLanguage("ru"));
 
 const renderPage = () =>
   render(
@@ -25,6 +29,10 @@ describe("i18next demo", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "21" }));
     expect(screen.getByText("В корзине 21 товар")).toBeTruthy();
+
+    // дробные — категория other
+    fireEvent.click(screen.getByRole("button", { name: "1.5" }));
+    expect(screen.getByText("В корзине 1.5 товара")).toBeTruthy();
   });
 
   test("changeLanguage переключает демо на английский и обратно", () => {

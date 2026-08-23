@@ -59,17 +59,17 @@ export const MEDIUM_EXERCISES = [
         severity: "major",
         title: "Stale closure: history из момента запуска эффекта",
         explain:
-          "Колбэк интервала замкнул history таким, каким он был при запуске эффекта. concat всегда прибавляет к старому снимку — история не растёт длиннее одного элемента.",
+          "Колбэк интервала замкнул history таким, каким он был при запуске эффекта: concat всегда прибавляет к устаревшему снимку — история фактически не накапливается.",
         fix: "Функциональный апдейт: setHistory(h => h.concat(quote)).",
         en: {
           title: "Stale closure: history from when the effect ran",
           explain:
-            "The interval callback closed over history as it was when the effect ran. concat always appends to that stale snapshot, so the history never grows past one element.",
+            "The interval callback closed over history as it was when the effect ran: concat always appends to that stale snapshot, so the history never actually accumulates.",
           fix: "Functional update: setHistory(h => h.concat(quote)).",
         },
       },
       {
-        lines: [11],
+        lines: [10, 11],
         severity: "major",
         title: "intervalMs нет в deps",
         explain:
@@ -276,17 +276,17 @@ export const MEDIUM_EXERCISES = [
         },
       },
       {
-        lines: [26],
+        lines: [25, 26],
         severity: "nit",
-        title: "Инлайн-обработчик на каждый item",
+        title: "Инлайн renderItem и обработчик на каждый item",
         explain:
-          "Новая стрелка onPress на каждый рендер каждой строки: если OrderCard обёрнут в memo, мемоизация не сработает. На длинных списках RN это заметно.",
-        fix: "Передавать в OrderCard id и стабильный колбэк (useCallback), onPress звать внутри карточки.",
+          "renderItem-стрелка и onPress-стрелка создаются заново на каждый рендер каждой строки: если OrderCard обёрнут в memo, мемоизация не сработает. На длинных списках RN это заметно.",
+        fix: "renderItem вынести в стабильную функцию (useCallback); в OrderCard передавать id и стабильный колбэк, onPress звать внутри карточки.",
         en: {
-          title: "Inline handler per item",
+          title: "Inline renderItem and a per-item handler",
           explain:
-            "A fresh onPress arrow for every row on every render: if OrderCard is wrapped in memo, the memoization is defeated. On long RN lists this is noticeable.",
-          fix: "Pass the id and a stable callback (useCallback) into OrderCard and call onPress inside the card.",
+            "Both the renderItem arrow and the onPress arrow are recreated on every render of every row: if OrderCard is wrapped in memo, the memoization is defeated. On long RN lists this is noticeable.",
+          fix: "Hoist renderItem into a stable function (useCallback); pass the id and a stable callback into OrderCard and call onPress inside the card.",
         },
       },
     ],
@@ -364,13 +364,13 @@ async function updateUser(id, patch) {
         severity: "major",
         title: "Кэш без инвалидации",
         explain:
-          "updateUser меняет пользователя на сервере, но cache[id] никто не трогает: getUser до конца сессии отдаёт устаревшие данные — пользователь сохранил имя, а на экране всюду старое.",
-        fix: "После успешного PATCH: delete cache[id] (или положить свежий ответ сервера); в общем случае — TTL.",
+          "updateUser меняет пользователя на сервере, но cache[id] никто не трогает: getUser до конца сессии отдаёт устаревшие данные — пользователь сохранил имя, а на экране всюду старое. Заодно updateUser не проверяет res.ok — «успех» PATCH не гарантирован.",
+        fix: "После успешного PATCH (проверив res.ok): delete cache[id] или положить свежий ответ сервера; в общем случае — TTL.",
         en: {
           title: "Cache with no invalidation",
           explain:
-            "updateUser changes the user on the server, but nobody touches cache[id]: getUser serves stale data for the rest of the session — the user saved a new name, yet the old one shows everywhere.",
-          fix: "After a successful PATCH: delete cache[id] (or store the server's fresh response); in general, add a TTL.",
+            "updateUser changes the user on the server, but nobody touches cache[id]: getUser serves stale data for the rest of the session — the user saved a new name, yet the old one shows everywhere. updateUser also never checks res.ok, so the PATCH \"success\" isn't guaranteed.",
+          fix: "After a successful PATCH (checking res.ok): delete cache[id] or store the server's fresh response; in general, add a TTL.",
         },
       },
       {
@@ -457,6 +457,20 @@ async function updateUser(id, patch) {
           explain:
             "useState(defaults) stores a reference to the parent's object: combined with the mutation in setField, the form corrupts defaults for the parent and everyone reusing that object (a form reset restores already-dirty values).",
           fix: "Copy on init: useState(() => ({ ...defaults })).",
+        },
+      },
+      {
+        lines: [14, 15],
+        severity: "major",
+        title: "Ошибка отправки молча глотается",
+        explain:
+          "try без catch: reject от api.sendFeedback уйдёт в unhandled rejection, а при res.ok === false не произойдёт вообще ничего — форма «отжала» кнопку, пользователь уверен, что фидбек отправлен, хотя это не так.",
+        fix: "Добавить catch (и ветку для !res.ok): показать ошибку пользователю и залогировать причину.",
+        en: {
+          title: "A failed send is silently swallowed",
+          explain:
+            "try with no catch: a rejection from api.sendFeedback becomes an unhandled rejection, and when res.ok is false nothing happens at all — the button un-presses and the user believes the feedback was sent when it wasn't.",
+          fix: "Add a catch (and a branch for !res.ok): show the user an error and log the cause.",
         },
       },
       {

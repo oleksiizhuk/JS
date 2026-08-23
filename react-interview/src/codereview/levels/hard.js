@@ -61,16 +61,16 @@ export const HARD_EXERCISES = [
 }`,
     issues: [
       {
-        lines: [27],
+        lines: [27, 37],
         severity: "blocker",
-        title: "Stale closure: items из старого рендера",
+        title: "Stale closure: items из старого рендера (нет в deps)",
         explain:
-          "items не входит в deps эффекта — замыкание держит массив из рендера, в котором эффект запустился. Конкретная гонка: query сменился при page === 1 → reset-эффект сделал setItems([]), но fetch-эффект не перезапустился по page и его замыкание держит СТАРЫЕ items → ответ нового query конкатенируется к элементам старого. В ленте — мусор из прошлого поиска.",
+          "items не входит в deps эффекта — замыкание держит массив из рендера, в котором эффект запустился. Конкретная гонка: query сменился при page === 1 → fetch-эффект перезапустился по query, замкнув items ещё ДО того, как reset-эффект их очистил; setItems([]) уже произошёл, но замыкание держит СТАРЫЙ массив → ответ нового query конкатенируется к элементам прошлого поиска. В ленте — мусор.",
         fix: "Функциональное обновление: setItems((prev) => prev.concat(fresh)) — тогда items из замыкания не нужен.",
         en: {
-          title: "Stale closure: items from an old render",
+          title: "Stale closure: items from an old render (missing from deps)",
           explain:
-            "items is not in the effect deps — the closure captures the array from the render where the effect ran. Concrete race: query changes while page === 1 → the reset effect does setItems([]), but the fetch effect doesn't re-run for page and its closure holds the OLD items → the new query's response gets concatenated onto the old query's items. The feed shows leftovers from the previous search.",
+            "items is not in the effect deps — the closure captures the array from the render where the effect ran. Concrete race: query changes while page === 1 → the fetch effect re-runs for query, closing over items BEFORE the reset effect cleared them; setItems([]) has already happened, but the closure still holds the OLD array → the new query's response gets concatenated onto the previous search's items. The feed shows garbage.",
           fix: "Use a functional update: setItems((prev) => prev.concat(fresh)) — then the closed-over items is no longer needed.",
         },
       },
@@ -89,7 +89,7 @@ export const HARD_EXERCISES = [
         },
       },
       {
-        lines: [25, 26],
+        lines: [6, 25, 26],
         severity: "major",
         title: "seenIds никогда не очищается",
         explain:
@@ -237,12 +237,12 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
         severity: "blocker",
         title: "Спред верхнего уровня + мутация вложенного объекта",
         explain:
-          "{ ...settings } копирует только верхний уровень — next.notifications это ТОТ ЖЕ объект, что и в предыдущем state. Строка 24 мутирует его напрямую: memo-компонент, получающий config={settings.notifications}, видит прежнюю ссылку и НЕ перерисуется — чекбокс не обновится. Заодно предыдущий state испорчен задним числом (сравнения «было/стало», devtools, откаты — всё врёт).",
+          "{ ...settings } копирует только верхний уровень — next.notifications это ТОТ ЖЕ объект, что и в предыдущем state. Строка 24 мутирует его напрямую: предыдущий state испорчен задним числом — сравнения «было/стало», devtools и откаты врут. А как только хендлеры стабилизируют (что и обещает PR), memo-компонент с config={settings.notifications} увидит прежнюю ссылку и перестанет обновляться — «залипший» чекбокс.",
         fix: "Копировать каждый изменяемый уровень: setSettings((s) => ({ ...s, notifications: { ...s.notifications, [channel]: !s.notifications[channel] } })).",
         en: {
           title: "Top-level spread + mutation of a nested object",
           explain:
-            "{ ...settings } copies only the top level — next.notifications is the SAME object as in the previous state. Line 24 mutates it in place: a memo component receiving config={settings.notifications} sees the same reference and will NOT re-render — the checkbox doesn't update. The previous state is also corrupted retroactively (before/after comparisons, devtools, undo — all lie).",
+            "{ ...settings } copies only the top level — next.notifications is the SAME object as in the previous state. Line 24 mutates it in place: the previous state is corrupted retroactively — before/after comparisons, devtools and undo all lie. And the moment the handlers get stabilized (which is exactly what the PR promises), a memo component receiving config={settings.notifications} sees the old reference and stops updating — a \"stuck\" checkbox.",
           fix: "Copy every level you change: setSettings((s) => ({ ...s, notifications: { ...s.notifications, [channel]: !s.notifications[channel] } })).",
         },
       },
@@ -367,6 +367,20 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
         },
       },
       {
+        lines: [2, 25],
+        severity: "major",
+        title: "messages не сбрасываются при смене комнаты",
+        explain:
+          "Deps [route.params.roomId] декларируют, что комната может смениться без ремоунта: сокет пересоздаётся, а история — нет. Сообщения новой комнаты допишутся к чужой истории, и пользователь видит смешанный чат.",
+        fix: "В эффекте по roomId сбрасывать историю: setMessages([]) перед подключением (или держать messages в состоянии, ключёванном по roomId).",
+        en: {
+          title: "messages aren't reset when the room changes",
+          explain:
+            "The [route.params.roomId] deps declare the room can change without a remount: the socket is recreated, but the history isn't. The new room's messages get appended to the old room's history, and the user sees a mixed-up chat.",
+          fix: "Reset the history in the roomId effect: setMessages([]) before connecting (or key the messages state by roomId).",
+        },
+      },
+      {
         lines: [26, 27, 28, 29],
         severity: "major",
         title: "Keyboard-подписки без cleanup",
@@ -474,15 +488,15 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
     issues: [
       {
         lines: [2, 7],
-        severity: "blocker",
+        severity: "major",
         title: "Обычный объект как словарь с внешними ключами",
         explain:
-          "key приходит снаружи (часто из URL/ввода пользователя). На {} ключи сталкиваются с прототипом: cache[\"toString\"]/[\"constructor\"] возвращают унаследованные функции — «запись» существует, хотя её не клали; а cache[\"__proto__\"] = entry не сохраняет запись, а ПОДМЕНЯЕТ прототип объекта (prototype pollution в миниатюре) — такой ключ вообще не кэшируется, дедупликация для него молча не работает.",
+          "key приходит снаружи (часто из URL/ввода пользователя), а {} наследует Object.prototype. cache[\"__proto__\"] = entry не сохраняет запись, а ПОДМЕНЯЕТ прототип: запись невидима для Object.keys — stats().size врёт, invalidate её не удалит, зато cache[\"promise\"]/[\"time\"] начинают «находиться» для любых ключей через прототип. Ключи вида \"toString\" спасает только случайность (TTL-проверка на унаследованной функции даёт NaN < ttl = false) — хрупко.",
         fix: "new Map() (или хотя бы Object.create(null)); с Map — map.get/map.set/map.delete.",
         en: {
           title: "A plain object as a dictionary with external keys",
           explain:
-            "key comes from outside (often from a URL or user input). On {} keys collide with the prototype: cache[\"toString\"]/[\"constructor\"] return inherited functions — an \"entry\" exists that was never stored; and cache[\"__proto__\"] = entry doesn't store an entry but REPLACES the object's prototype (prototype pollution in miniature) — such a key is never cached, and dedup for it silently doesn't work.",
+            "key comes from outside (often from a URL or user input), and {} inherits Object.prototype. cache[\"__proto__\"] = entry doesn't store an entry — it REPLACES the prototype: the entry is invisible to Object.keys — stats().size lies, invalidate can't delete it, while cache[\"promise\"]/[\"time\"] start \"existing\" for arbitrary keys via the prototype. Keys like \"toString\" are saved only by accident (the TTL check on an inherited function yields NaN < ttl = false) — fragile.",
           fix: "new Map() (or at least Object.create(null)); with a Map — map.get/map.set/map.delete.",
         },
       },
@@ -501,16 +515,16 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
         },
       },
       {
-        lines: [8],
+        lines: [8, 32],
         severity: "major",
         title: "Протухшие записи никогда не удаляются",
         explain:
-          "Проверка TTL только читает — просроченная запись перезаписывается лишь при следующем get этого же ключа. Ключи, к которым перестали обращаться (ушли с экрана, сменился пользователь), живут в кэше вечно; лимита размера нет — в долгоживущем SPA это утечка памяти с ростом без потолка.",
+          "Проверка TTL только читает — просроченная запись перезаписывается лишь при следующем get этого же ключа. Ключи, к которым перестали обращаться (ушли с экрана, сменился пользователь), живут в кэше вечно; лимита размера нет — в долгоживущем SPA это утечка памяти, а stats().size показывает завышенный размер с учётом трупов.",
         fix: "Удалять запись при обнаружении просрочки + ограничить размер (LRU / max entries) или периодическая уборка.",
         en: {
           title: "Expired entries are never removed",
           explain:
-            "The TTL check only reads — an expired entry is overwritten only on the next get of the same key. Keys nobody asks about anymore (screen left, user switched) live in the cache forever; there is no size cap — in a long-lived SPA this is a memory leak with unbounded growth.",
+            "The TTL check only reads — an expired entry is overwritten only on the next get of the same key. Keys nobody asks about anymore (screen left, user switched) live in the cache forever; there is no size cap — in a long-lived SPA this is a memory leak, and stats().size reports a number inflated by the corpses.",
           fix: "Delete the entry when expiry is detected, plus cap the size (LRU / max entries) or run periodic cleanup.",
         },
       },
@@ -606,17 +620,17 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
         },
       },
       {
-        lines: [19, 20, 21],
+        lines: [10, 19, 20, 21],
         severity: "blocker",
-        title: "Неидемпотентный POST /confirm из эффекта",
+        title: "Неидемпотентный POST /confirm + replaceState до завершения",
         explain:
-          "Эффект выполняет мутирующий запрос без какой-либо защиты от повторного запуска: в StrictMode (dev) эффект вызывается дважды — два confirm; в проде то же даст ремоунт страницы, кнопка «назад» или второй таб с тем же URL. Для платёжной операции это потенциально двойное списание/двойное подтверждение.",
-        fix: "Idempotency-Key (например, orderId + попытка) в заголовке + серверная защита; на клиенте — guard в ref/sessionStorage от повторного запуска.",
+          "Мутирующий запрос без защиты от повторов: второй таб или повторное открытие ссылки шлюза (из письма/истории) прогонит confirm ещё раз, и каждый ретрай (строка 27) снова выполняет ВЕСЬ finalize, включая POST — для платёжки это потенциально двойное подтверждение. А replaceState на строке 10 стирает параметры ДО завершения операции: упавший confirm + перезагрузка = вечный спиннер без orderId и без шанса повторить.",
+        fix: "Idempotency-Key (orderId + попытка) + серверная защита; replaceState — только ПОСЛЕ успешного подтверждения.",
         en: {
-          title: "A non-idempotent POST /confirm from an effect",
+          title: "A non-idempotent POST /confirm + replaceState before completion",
           explain:
-            "The effect fires a mutating request with no protection against re-runs: in StrictMode (dev) the effect runs twice — two confirms; in prod the same happens on a page remount, the back button or a second tab with the same URL. For a payment operation that's a potential double charge / double confirmation.",
-          fix: "An Idempotency-Key header (e.g. orderId + attempt) plus a server-side guard; on the client, a re-run guard in a ref/sessionStorage.",
+            "A mutating request with no replay protection: a second tab or re-opening the gateway link (from email/history) runs confirm again, and every retry (line 27) re-runs ALL of finalize including the POST — for a payment flow that's a potential double confirmation. And the replaceState on line 10 wipes the params BEFORE the operation completes: a failed confirm + a reload = an endless spinner with no orderId and no way to retry.",
+          fix: "An Idempotency-Key (orderId + attempt) plus a server-side guard; do the replaceState only AFTER a successful confirmation.",
         },
       },
       {
@@ -634,17 +648,17 @@ const ChannelToggle = memo(function ChannelToggle({ config, onToggle }) {
         },
       },
       {
-        lines: [27],
+        lines: [8, 27],
         severity: "major",
-        title: "Бесконечный ретрай без отмены и лимита",
+        title: "Сломанный ретрай и вечный спиннер без error-state",
         explain:
-          "setTimeout не сохраняется и не чистится в cleanup эффекта: после ухода со страницы цепочка ретраев продолжает жить и дёргать setStatus/confirm на размонтированном компоненте. Лимита попыток и backoff нет — при лежащем API запросы идут вечно каждые 2 секунды, и каждый ретрай заново прогоняет весь finalize, включая POST /confirm.",
-        fix: "Хранить id таймера (и AbortController) в ref, чистить в cleanup; ограничить число попыток с экспоненциальным backoff и терминальным состоянием ошибки.",
+          "У повторного вызова finalize в setTimeout нет .catch: вторая ошибка — unhandled rejection, цепочка обрывается, пользователь навсегда смотрит на «Retrying» без сообщения об ошибке (как и при !orderId на строке 8 — молчаливый вечный спиннер). Таймер не сохраняется и не чистится в cleanup: ретрай стрельнёт и после ухода со страницы — с POST /confirm и жёстким redirect с чужого экрана.",
+        fix: "Рекурсивный attempt() с .catch, лимитом попыток, backoff и терминальным error-state; id таймера в ref + очистка в cleanup; для !orderId — показать ошибку, а не return.",
         en: {
-          title: "Infinite retry with no cancellation and no cap",
+          title: "A broken retry and an endless spinner with no error state",
           explain:
-            "The setTimeout is neither stored nor cleared in the effect cleanup: after leaving the page the retry chain lives on, hitting setStatus/confirm on an unmounted component. There's no attempt cap or backoff — with the API down, requests fire forever every 2 seconds, and each retry re-runs all of finalize including the POST /confirm.",
-          fix: "Keep the timer id (and an AbortController) in a ref and clear them in cleanup; cap the attempts with exponential backoff and a terminal error state.",
+            "The finalize call inside setTimeout has no .catch: a second failure is an unhandled rejection, the chain stops, and the user stares at \"Retrying\" forever with no error message (same for !orderId on line 8 — a silent endless spinner). The timer is neither stored nor cleared in cleanup: the retry can fire after the user left the page — issuing a POST /confirm and a hard redirect from a different screen.",
+          fix: "A recursive attempt() with .catch, an attempt cap, backoff and a terminal error state; keep the timer id in a ref and clear it in cleanup; for !orderId show an error instead of returning.",
         },
       },
       {

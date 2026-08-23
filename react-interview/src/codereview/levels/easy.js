@@ -43,17 +43,17 @@ export const EASY_EXERCISES = [
         },
       },
       {
-        lines: [6],
+        lines: [4, 6],
         severity: "major",
         title: "Забытая зависимость userId в useEffect",
         explain:
-          "Эффект с [] выполняется один раз: если проп userId изменится, новый пользователь не загрузится — на экране останется старый. Линтер react-hooks/exhaustive-deps это ловит.",
-        fix: "}, [userId]); — эффект перезапускается при смене userId.",
+          "Эффект с [] выполняется один раз: если проп userId изменится, новый пользователь не загрузится — на экране останется старый. Линтер react-hooks/exhaustive-deps это ловит. А после фикса появится и следующий уровень: быстрые смены userId без cleanup дадут гонку ответов.",
+        fix: "}, [userId]); — эффект перезапускается при смене userId (плюс cleanup с флагом/AbortController от гонки).",
         en: {
           title: "Missing userId dependency in useEffect",
           explain:
-            "An effect with [] runs once: if the userId prop changes, the new user is never fetched — the old one stays on screen. The react-hooks/exhaustive-deps lint rule catches this.",
-          fix: "}, [userId]); — the effect re-runs when userId changes.",
+            "An effect with [] runs once: if the userId prop changes, the new user is never fetched — the old one stays on screen. The react-hooks/exhaustive-deps lint rule catches this. And once fixed, the next level appears: rapid userId changes without a cleanup will race their responses.",
+          fix: "}, [userId]); — the effect re-runs when userId changes (plus a cleanup with a flag/AbortController against the race).",
         },
       },
       {
@@ -119,12 +119,12 @@ export const EASY_EXERCISES = [
         severity: "major",
         title: "key={index} в изменяемом списке",
         explain:
-          "Список пополняется и может переупорядочиваться — индексы «переезжают»: React переиспользует не те элементы, локальный state строк (если появится) прилипнет к позициям, лишние обновления DOM.",
+          "Пока список только пополняется в конец, key={index} почти безвреден — но как только появится удаление, вставка или сортировка, индексы «переедут»: React переиспользует не те элементы, локальный state строк прилипнет к позициям.",
         fix: "key={item.id} — стабильный ключ уже есть в данных.",
         en: {
           title: "key={index} in a mutable list",
           explain:
-            "The list grows and may get reordered — indexes \"shift\": React reuses the wrong elements, per-row local state (if it ever appears) sticks to positions, and the DOM updates more than needed.",
+            "While the list only ever appends, key={index} is almost harmless — but the moment deletion, insertion or sorting appears, indexes \"shift\": React reuses the wrong elements and per-row local state sticks to positions.",
           fix: "key={item.id} — a stable key already exists in the data.",
         },
       },
@@ -188,12 +188,12 @@ export const EASY_EXERCISES = [
         severity: "major",
         title: "onPress вызывается прямо при рендере",
         explain:
-          "navigation.navigate(\"Profile\") — это ВЫЗОВ, а не колбэк: переход выполнится на каждом рендере экрана, а в onPress попадёт undefined (кнопка перестанет работать).",
+          "navigation.navigate(\"Profile\") — это ВЫЗОВ, а не колбэк: переход сработает сразу при монтировании (экран настроек мгновенно уводит на Profile) и на каждом рендере, а в onPress попадёт undefined — кнопка не работает.",
         fix: "onPress={() => navigation.navigate(\"Profile\")}.",
         en: {
           title: "onPress is invoked right during render",
           explain:
-            "navigation.navigate(\"Profile\") is a CALL, not a callback: the navigation fires on every render of the screen, and onPress receives undefined (the button stops working).",
+            "navigation.navigate(\"Profile\") is a CALL, not a callback: the navigation fires right at mount (the settings screen instantly bounces to Profile) and on every render, and onPress receives undefined — the button doesn't work.",
           fix: "onPress={() => navigation.navigate(\"Profile\")}.",
         },
       },
@@ -244,27 +244,27 @@ export const EASY_EXERCISES = [
         severity: "blocker",
         title: "Off-by-one: i <= items.length",
         explain:
-          "Последняя итерация обращается к items[items.length] — это undefined, и undefined.price бросает TypeError: функция падает на ЛЮБОМ непустом массиве.",
+          "Последняя итерация обращается к items[items.length] — это undefined, и undefined.price бросает TypeError: функция падает на любом массиве, даже пустом (i = 0 <= 0 тоже выполнится).",
         fix: "i < items.length (или items.reduce((sum, it) => sum + it.price, 0)).",
         en: {
           title: "Off-by-one: i <= items.length",
           explain:
-            "The last iteration accesses items[items.length] — that's undefined, and undefined.price throws a TypeError: the function crashes on ANY non-empty array.",
+            "The last iteration accesses items[items.length] — that's undefined, and undefined.price throws a TypeError: the function crashes on ANY array, even an empty one (i = 0 <= 0 still runs).",
           fix: "i < items.length (or items.reduce((sum, it) => sum + it.price, 0)).",
         },
       },
       {
-        lines: [10],
+        lines: [10, 13],
         severity: "major",
-        title: "discount === NaN всегда false",
+        title: "discount === NaN всегда false (и скидка без диапазона)",
         explain:
-          "NaN не равен ничему, включая самого себя — эта проверка никогда не срабатывает. Кривой купон даст discount = NaN, и итоговая сумма станет NaN.",
-        fix: "Number.isNaN(discount) (или isNaN, но Number.isNaN строже).",
+          "NaN не равен ничему, включая самого себя — эта проверка никогда не срабатывает: кривой купон даст discount = NaN, и итоговая сумма станет NaN. Заодно discount не ограничен диапазоном 0–100: percent = 150 даст отрицательный итог.",
+        fix: "Number.isNaN(discount) + проверка диапазона (0 <= discount && discount <= 100).",
         en: {
-          title: "discount === NaN is always false",
+          title: "discount === NaN is always false (and no discount range)",
           explain:
-            "NaN is not equal to anything, including itself — this check never fires. A malformed coupon yields discount = NaN, and the final total becomes NaN.",
-          fix: "Number.isNaN(discount) (or isNaN, though Number.isNaN is stricter).",
+            "NaN is not equal to anything, including itself — this check never fires: a malformed coupon yields discount = NaN, and the final total becomes NaN. On top of that, discount has no 0–100 bound: percent = 150 produces a negative total.",
+          fix: "Number.isNaN(discount) + a range check (0 <= discount && discount <= 100).",
         },
       },
       {
@@ -308,7 +308,7 @@ export const EASY_EXERCISES = [
 }`,
     issues: [
       {
-        lines: [3, 10, 11],
+        lines: [3, 8, 10, 11],
         severity: "blocker",
         title: "forEach не ждёт async-колбэки",
         explain:
@@ -372,7 +372,7 @@ export const EASY_EXERCISES = [
   }
   return (
     <form onSubmit={handleSubmit}>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button>Sign up</button>
     </form>
