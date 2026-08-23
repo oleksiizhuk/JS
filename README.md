@@ -1,9 +1,13 @@
 # Interview Trainer (React / JS)
 
-Prep materials for a senior React / React Native frontend interview, built as an
-interactive web app plus a set of notes and exercises.
+[![Deploy to GitHub Pages](https://github.com/oleksiizhuk/JS/actions/workflows/deploy.yml/badge.svg)](https://github.com/oleksiizhuk/JS/actions/workflows/deploy.yml)
 
-**Live site:** https://oleksiizhuk.github.io/JS/ (deployed from `react-interview/` via GitHub Pages)
+## 🌐 Live site: **https://oleksiizhuk.github.io/JS/**
+
+Prep materials for a senior React / React Native frontend interview, built as an
+interactive web app plus a set of notes and exercises. The app is bilingual
+(RU/EN toggle in the sidebar) and works straight from the browser — quiz, live
+coding and the code review trainer included, no install needed.
 
 ## react-interview/ — the interview trainer (main app)
 
@@ -52,6 +56,14 @@ Sections:
 - `live-coding/` — classic tasks: `reverse-string.js` and friends
 - Plus a few legacy JS practice files in the repo root (closures, event loop,
   leetcode, recursion) from earlier study rounds
+
+## Deployment
+
+The site auto-deploys to **GitHub Pages** on every push to `main`
+(`.github/workflows/deploy.yml`): `npm ci → npm test → npm run build` →
+publish `react-interview/dist`. Tests gate the deploy — a red build never
+ships. Production is served from `/JS/` (the repo name), configured via
+`base` in `vite.config.js`; local dev stays at the root.
 
 ## Development notes
 
