@@ -1,57 +1,72 @@
-# Подготовка к собеседованию (React/JS)
+# Interview prep (React/JS)
 
-Пользователь готовится к собеседованию по чек-листу из `~/Downloads/temp.xlsx`
-(секции: JS Core, React, Redux, Native, GraphQL, TypeScript, Live coding).
-Общение — на русском; технические термины — по-английски.
+The user is preparing for an interview following the checklist in
+`~/Downloads/temp.xlsx` (sections: JS Core, React, Redux, Native, GraphQL,
+TypeScript, Live coding).
+**Communicate in Russian**; technical terms in English. Docs, skills and
+commit bodies may be in either language (commit subjects — in Russian, see
+the git-workflow skill).
 
-## Структура
+## Structure
 
-- `react-interview/` — Vite + React «собес-тренажёр»: страницы тем с живыми демо,
-  квиз (10/20/50 вопросов, банк в `src/quiz/sections/*.js`), live coding
-  (`src/livecoding/`: редактор в браузере, код выполняется через new Function,
-  тесты в tasks.js; НОВАЯ ЗАДАЧА: решение обязано проходить свои тесты —
-  проверка: node-скрипт прогоняет task.solution через task.tests),
-  code review тренажёр (`src/codereview/`: задачи с уровнями easy/medium/hard —
-  НОВЫЕ задачи класть в `levels/{easy,medium,hard}.js` с полем `level`;
-  ПРАВИЛО: `issue.lines` — номера строк в `code` с 1, непомеченные строки
-  обязаны быть чистыми — клик по ним = ложная тревога; внутри `code` нельзя
-  использовать бэктики и `\${`),
-  why-did-you-render. Страница «i18n / i18next» использует НАСТОЯЩИЙ i18next
-  (отдельный createInstance только для демо — глобальный RU/EN-тумблер
-  тренажёра остаётся самодельным `<L>`, это осознанный trade-off).
-  Запуск: `cd react-interview && npm run dev` → http://localhost:5173
-  Проверка после изменений: `npm run build && npm test` (vitest + snapshot).
-- `js-core/` — задачки-файлы (call-bind-apply, event-loop) + конспект `JS-CORE.md`
-- `react-notes/` — конспекты (prop-drilling)
-- `live-coding/` — задачи live coding (reverse-string)
-- `README.md` — индекс всего
+- `react-interview/` — the Vite + React "interview trainer": topic pages with
+  live demos, a quiz (10/20/50 questions, bank in `src/quiz/sections/*.js`),
+  live coding (`src/livecoding/`: in-browser editor, code runs via
+  new Function, tests in tasks.js; NEW TASK rule: the solution must pass its
+  own tests — verify with a node script running task.solution through
+  task.tests), the code review trainer (`src/codereview/`: exercises with
+  easy/medium/hard levels — put NEW exercises into
+  `levels/{easy,medium,hard}.js` with a `level` field; RULE: `issue.lines`
+  are 1-based line numbers into `code`, unmarked lines must be clean —
+  clicking them counts as a false positive; no backticks or `${` inside
+  `code`), and why-did-you-render. The "i18n / i18next" page uses REAL
+  i18next (a separate createInstance just for the demo — the trainer's
+  global RU/EN toggle stays hand-rolled `<L>`, a deliberate trade-off).
+  Run: `cd react-interview && npm run dev` → http://localhost:5173
+  Check after changes: `npm run build && npm test` (vitest + snapshots).
+- `js-core/` — exercise files (call-bind-apply, event-loop) + the `JS-CORE.md`
+  summary
+- `react-notes/` — notes (prop-drilling)
+- `live-coding/` — live coding tasks (reverse-string)
+- `README.md` — the index of everything (in English, with the live-site link)
 
-## Скиллы (ОБЯЗАТЕЛЬНО использовать)
+## Deployment
 
-- **`/interview-topic`** (`.claude/skills/interview-topic/SKILL.md`) — формат
-  страниц тренажёра: вопрос интервьюера → эталонный ответ (двуязычный RU/EN) →
-  разбор с демо → «где могут подловить» → red flag → резюме. Вызывать при
-  создании или переделке ЛЮБОЙ страницы темы в `react-interview/src/topics/`.
-  Образец: `src/topics/js/LetVarConst.jsx`.
-- **`/quiz-questions`** (`.claude/skills/quiz-questions/SKILL.md`) — формат и
-  правила вопросов квиза ({ t, q, o[4], a, e }; секции JS/React/Redux/Native/
-  GraphQL/TS). Вызывать при добавлении вопросов в `src/quiz/questions.js`.
+Push to `main` = production deploy to GitHub Pages
+(https://oleksiizhuk.github.io/JS/) via `.github/workflows/deploy.yml`.
+Details and git rules — in the git-workflow skill.
 
-## Правила проекта
+## Skills (MANDATORY to use)
 
-- Новые темы регистрировать в `react-interview/src/App.jsx` (SECTIONS),
-  порядок секций: JS Core → React → Redux → ... → Тренировка → Разное.
-- К новой теме добавлять 2–3 вопроса в `src/quiz/questions.js`
-  ({ t, q, o[4], a, e }), сохраняя порядок тем в банке.
-- Код примеров всегда показывать НА странице (`pre.code`) — пользователь
-  читает с сайта.
-- ВЕСЬ контент ДВУЯЗЫЧНЫЙ (тумблер RU/EN переключает всё): страницы — через
-  `<L ru en>` / `<CodeBlock ru en>` / en-пропсы Demo/Gotchas (см. скилл
-  interview-topic); квиз — поле `en` у каждого вопроса (порядок en.o = o!);
-  live coding и code review — en-поля задач/упражнений. Новый контент без
-  en-версии не считается готовым. Страж: `src/__tests__/translations.test.js`
-  + `npm test` после любых изменений.
-- В демо не использовать `eval` — только `new Function("...")()`.
-- StrictMode в `main.jsx` выключен намеренно (демо жизненного цикла).
-- Формат обучения: сначала пользователь предсказывает ответ, потом проверка
-  с разбором ошибок.
+- **`/interview-topic`** (`.claude/skills/interview-topic/SKILL.md`) — the
+  trainer page format: interviewer's question → model answer (bilingual
+  RU/EN) → deep dive with demos → "where they trip you up" → red flag →
+  summary. Invoke when creating or reworking ANY topic page in
+  `react-interview/src/topics/`. Reference: `src/topics/js/LetVarConst.jsx`.
+- **`/quiz-questions`** (`.claude/skills/quiz-questions/SKILL.md`) — the quiz
+  question format and rules ({ t, q, o[4], a, e }; sections JS/React/Redux/
+  Native/GraphQL/TS/EnginX/Claude). Invoke when adding questions to
+  `src/quiz/questions.js`.
+- **`/git-workflow`** (`.claude/skills/git-workflow/SKILL.md`) — commit/push
+  rules, the pre-commit build+test gate, auto-deploy to GitHub Pages, what
+  must never be done (force-push, breaking the `/JS/` base). Invoke for any
+  commit, push or deploy-affecting change.
+
+## Project rules
+
+- Register new topics in `react-interview/src/App.jsx` (SECTIONS), section
+  order: JS Core → React → Redux → ... → Тренировка → Разное.
+- Add 2–3 questions for every new topic to `src/quiz/questions.js`
+  ({ t, q, o[4], a, e }), keeping the topic order in the bank.
+- Always show example code ON the page (`pre.code`) — the user reads from
+  the site.
+- ALL content is BILINGUAL (the RU/EN toggle switches everything): pages —
+  via `<L ru en>` / `<CodeBlock ru en>` / the en props of Demo/Gotchas (see
+  the interview-topic skill); quiz — an `en` field on every question (en.o
+  order = o!); live coding and code review — en fields on tasks/exercises.
+  New content without its EN version is not considered done. Guard:
+  `src/__tests__/translations.test.js` + `npm test` after any change.
+- No `eval` in demos — only `new Function("...")()`.
+- StrictMode in `main.jsx` is intentionally off (lifecycle demos).
+- Learning format: the user predicts the answer first, then checks it with
+  a breakdown of mistakes.

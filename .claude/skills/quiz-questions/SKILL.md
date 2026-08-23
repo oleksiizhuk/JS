@@ -1,81 +1,86 @@
 ---
 name: quiz-questions
-description: Формат и правила написания вопросов для квиза собес-тренажёра (react-interview/src/quiz/questions.js). Использовать при добавлении вопросов к новой теме или расширении банка.
+description: Format and rules for writing quiz questions for the interview trainer (react-interview/src/quiz/questions.js). Use when adding questions for a new topic or growing the bank.
 ---
 
-# Квиз: формат вопросов
+# Quiz: question format
 
-Банк разбит по секциям: `react-interview/src/quiz/sections/{js,react,redux,native,
-graphql,ts}.js` — каждый экспортирует массив (`JS_QUESTIONS`, `REACT_QUESTIONS`,
-…). Файл `quiz/questions.js` только склеивает их в `QUESTIONS` в порядке секций.
-Добавляя вопросы, правь файл нужной секции; новую секцию — новый файл +
-импорт в `questions.js` + запись в `SECTION_LABELS` в `Quiz.jsx`.
-Движок: `src/quiz/Quiz.jsx` — перемешивает вопросы, не повторяет между
-прогонами (localStorage `quiz-seen`), на старте юзер выбирает секции
-чекбоксами и размер (10/20/50).
+The bank is split by section: `react-interview/src/quiz/sections/{js,react,
+redux,native,graphql,ts,enginx,claude}.js` — each exports an array
+(`JS_QUESTIONS`, `REACT_QUESTIONS`, …). `quiz/questions.js` only concatenates
+them into `QUESTIONS` in section order. When adding questions, edit the
+relevant section file; a new section = a new file + an import in
+`questions.js` + an entry in `SECTION_LABELS` in `Quiz.jsx`.
+Engine: `src/quiz/Quiz.jsx` — shuffles questions, never repeats across runs
+(localStorage `quiz-seen`); on start the user picks sections via checkboxes
+and a size (10/20/50).
 
-## Формат вопроса
+## Question format
 
-Каждый вопрос ДВУЯЗЫЧНЫЙ: рядом с ru-полями обязательно поле
-`en: { t, q, o: [4], e }` — полный перевод. КРИТИЧНО: порядок вариантов
-`en.o` обязан совпадать с `o` (индекс правильного `a` общий; движок
-перемешивает оба списка одним порядком).
+Every question is BILINGUAL: alongside the ru fields, the field
+`en: { t, q, o: [4], e }` — a full translation — is mandatory. CRITICAL: the
+option order in `en.o` must match `o` (the correct index `a` is shared; the
+engine shuffles both lists with the same order). Question text and options
+are in Russian in the ru fields, English in `en`.
 
 ```js
 {
-  t: "JS · Event loop",   // секция · подтема. Секция = префикс до " · "!
-  q: "Что выведет?\n<код с \\n>",  // многострочный код — через \n
-  o: ["вариант A", "вариант B", "вариант C", "вариант D"], // ровно 4
-  a: 1,                   // индекс правильного (0-3)
-  e: "Объяснение: ПОЧЕМУ + как чинить/правильная формулировка.",
+  t: "JS · Event loop",   // section · subtopic. Section = the prefix before " · "!
+  q: "Что выведет?\n<code with \\n>",  // multi-line code goes through \n
+  o: ["option A", "option B", "option C", "option D"], // exactly 4
+  a: 1,                   // index of the correct option (0-3)
+  e: "Explanation: WHY + the fix / the correct interview phrasing.",
 }
 ```
 
-## Секции (префикс `t`)
+## Sections (the `t` prefix)
 
-`JS`, `React`, `Redux`, `Native`, `GraphQL`, `TS` — новые секции добавлять и в
-`SECTION_LABELS` в Quiz.jsx. Вопросы в банке группировать по секциям
-(комментарии-разделители `// ═══ SECTION ═══`), внутри — по подтемам.
+`JS`, `React`, `Redux`, `Native`, `GraphQL`, `TS`, `EnginX`, `Claude` — add
+new sections to `SECTION_LABELS` in Quiz.jsx as well. Group questions in the
+bank by section (separator comments `// ═══ SECTION ═══`), then by subtopic.
 
-## Правила качества вопроса
+## Question quality rules
 
-1. **Лучший формат — «предскажи результат»**: код в `q`, варианты — возможные
-   выводы (включая ошибки: TypeError, ReferenceError, undefined).
-2. **Ответ не должен содержаться в вопросе.** Плохо: «почему this потерялся?»
-   с вариантом «потому что this потерялся». Хорошо: «что вернёт fn()?»
-3. **Дистракторы правдоподобны** — типичные ошибки мышления, а не мусор:
-   для `[1,10,2].sort()` дистрактор `[1,2,10]` обязателен.
-4. **Один правильный ответ**, без «все варианты верны».
-5. **`e` учит**: причина + фикс/правильная формулировка для собеса, 1–3
-   предложения. Не пересказ правильного варианта.
-6. **Длина вариантов не должна выдавать ответ.** Самая частая ошибка — в
-   вопросах «Что такое X?»: правильный вариант пишется развёрнутым
-   определением на 15–20 слов, а дистракторы — обрывками в 2–4 слова.
-   Тестируемый быстро учится выбирать «самый длинный и техничный», не читая.
-   Все 4 варианта должны быть сопоставимы по длине и детальности (±30%);
-   выравнивать нужно ДОПИСЫВАЯ неверные варианты до полноценных неверных
-   утверждений, а не сокращая верный.
-7. На новую тему — 2–4 вопроса; хотя бы один «предскажи результат», один
-   концептуальный. **Покрытие**: для каждой карточки в блоке «Разбор» на
-   странице темы должен быть хотя бы один вопрос в банке.
-8. **Баланс секций**: разница в числе вопросов между секциями с сопоставимым
-   числом страниц-тем — не больше ~2×. Проверять перед сдачей (см. ниже).
+1. **The best format is "predict the result"**: code in `q`, options are the
+   possible outputs (including errors: TypeError, ReferenceError, undefined).
+2. **The answer must not be contained in the question.** Bad: "why did this
+   get lost?" with the option "because this got lost". Good: "what does fn()
+   return?"
+3. **Distractors must be plausible** — typical thinking mistakes, not junk:
+   for `[1,10,2].sort()` the distractor `[1,2,10]` is mandatory.
+4. **Exactly one correct answer**, no "all of the above".
+5. **`e` teaches**: the cause + the fix / correct interview phrasing, 1–3
+   sentences. Not a restatement of the correct option.
+6. **Option length must not give the answer away.** The most common mistake
+   is in "What is X?" questions: the correct option gets a full 15–20-word
+   definition while distractors are 2–4-word stubs. Test-takers quickly learn
+   to pick "the longest, most technical one" without reading. All 4 options
+   must be comparable in length and detail (±30%); balance by EXPANDING the
+   wrong options into full-fledged false statements, never by shortening the
+   correct one.
+7. Per new topic — 2–4 questions; at least one "predict the result" and one
+   conceptual. **Coverage**: every card in the topic page's deep-dive block
+   should have at least one question in the bank.
+8. **Section balance**: sections with a comparable number of topic pages
+   should differ in question count by no more than ~2×. Check before
+   finishing (see below).
 
-## После изменений
+## After changes
 
 ```bash
-cd react-interview && npm run build   # ошибка синтаксиса уронит сборку
+cd react-interview && npm run build   # a syntax error fails the build
 
-# Проверка баланса и валидности (правила 6-8):
+# Balance and validity check (rules 6-8):
 node -e "import('./src/quiz/questions.js').then(({QUESTIONS})=>{
   const by={}; const bad=[];
   QUESTIONS.forEach((q,i)=>{
     const s=q.t.split(' · ')[0]; by[s]=(by[s]||0)+1;
-    if(q.o.length!==4) bad.push(i+' вариантов: '+q.o.length);
+    if(q.o.length!==4) bad.push(i+' options: '+q.o.length);
     if(q.a<0||q.a>3) bad.push(i+' a='+q.a);
+    if(!q.en||!q.en.o||q.en.o.length!==4) bad.push('#'+i+' missing/short en');
     const len=q.o.map(o=>o.length), max=Math.max(...len), min=Math.min(...len);
-    if(max>min*2.5) bad.push('#'+i+' \"'+q.t+'\" длина вариантов выдаёт ответ: '+len.join('/'));
+    if(max>min*2.5) bad.push('#'+i+' \"'+q.t+'\" option length gives the answer away: '+len.join('/'));
   });
-  console.log(by); console.log(bad.length?bad:'ок');
+  console.log(by); console.log(bad.length?bad:'ok');
 })"
 ```
