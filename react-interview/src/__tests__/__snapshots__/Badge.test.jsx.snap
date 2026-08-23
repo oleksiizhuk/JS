@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Badge не изменился 1`] = `
+<span
+  class="badge badge-active"
+>
+  active
+</span>
+`;
