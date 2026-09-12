@@ -133,9 +133,9 @@ input.inp {
 .en-ex { margin: 4px 0 0; padding-left: 20px; font-size: 14.5px; }
 .en-own { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid #c7cad6; border-radius: 8px; margin: 4px 0 8px; }
 .en-story { font-size: 16px; line-height: 1.9; }
-button.en-hl { font: inherit; background: #fff3c4; border: none; border-bottom: 2px solid #e0b93a; border-radius: 4px; padding: 0 3px; cursor: pointer; }
-button.en-hl:hover { background: #ffe9a8; }
-button.en-hl.active { background: #4f6ef7; border-color: #4f6ef7; color: #fff; }
+.en-hl { background: #fff3c4; border-bottom: 2px solid #e0b93a; border-radius: 4px; padding: 0 3px; cursor: pointer; }
+.en-hl:hover { background: #ffe9a8; }
+.en-hl.active { background: #4f6ef7; border-color: #4f6ef7; color: #fff; }
 .en-flash { text-align: center; }
 .en-front { font-size: 26px; font-weight: 700; margin: 10px 0 4px; }
 .en-flash .en-card { text-align: left; margin-top: 12px; }
@@ -143,3 +143,52 @@ button.en-hl.active { background: #4f6ef7; border-color: #4f6ef7; color: #fff; }
 .en-blank { display: inline-block; min-width: 70px; border-bottom: 2px solid #4f6ef7; font-weight: 700; color: #4f6ef7; text-align: center; padding: 0 4px; }
 button.en-opt.right { background: #d9f5df; border-color: #4caf6a; font-weight: 700; }
 button.en-opt.wrong { background: #ffd9d9; border-color: #e5484d; }
+
+/* ── Верхняя панель и мобильное меню (видны только на узких экранах) ── */
+.topbar { display: none; }
+.backdrop { display: none; }
+
+@media (max-width: 768px) {
+  .app { display: block; }
+  .topbar {
+    display: flex; align-items: center; gap: 10px;
+    position: sticky; top: 0; z-index: 30;
+    background: #1a1a2e; color: #fff;
+    padding: 10px 12px; padding-top: calc(10px + env(safe-area-inset-top));
+  }
+  .menu-btn, .topbar-lang {
+    border: 1px solid #3a3a58; background: transparent; color: #fff;
+    border-radius: 8px; font-size: 18px; line-height: 1; cursor: pointer;
+    min-width: 40px; min-height: 40px;
+  }
+  .topbar-lang { font-size: 13px; font-weight: 700; margin-left: auto; }
+  .topbar-title { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 40;
+    width: min(320px, 85vw); height: 100dvh;
+    padding-top: calc(16px + env(safe-area-inset-top));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    transform: translateX(-100%); transition: transform 0.2s ease;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar button { padding: 11px 12px; font-size: 15px; } /* пальцем удобнее */
+  .backdrop { display: block; position: fixed; inset: 0; z-index: 35; background: rgba(0, 0, 0, 0.45); }
+  body.menu-open { overflow: hidden; }
+
+  .content {
+    max-width: none; padding: 14px 14px calc(24px + env(safe-area-inset-bottom));
+    overflow-x: hidden;
+  }
+  .content h1 { font-size: 22px; }
+  .card { padding: 12px 14px; border-radius: 10px; }
+  .row > .card { min-width: 0; }
+  pre.code { font-size: 12px; padding: 10px 12px; }
+  button.btn { min-height: 40px; }
+  .q-block, .answer-block { padding: 12px 14px; }
+  .en-front { font-size: 22px; }
+  .en-story, .en-gap { font-size: 15.5px; }
+  /* iOS Safari зумит страницу при фокусе на поле с шрифтом < 16px */
+  textarea, input, .editor { font-size: 16px !important; }
+}

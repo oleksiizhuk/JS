@@ -207,8 +207,21 @@ const ALL_TOPICS = SECTIONS.flatMap((s) => s.topics);
 export default function App() {
   const [topicId, setTopicId] = useState("letvarconst");
   const [lang, setLang] = useState("ru");
+  const [menuOpen, setMenuOpen] = useState(false); // мобильное меню (≤768px)
   const topic = ALL_TOPICS.find((t) => t.id === topicId);
   const Current = topic.C;
+
+  // На телефоне контент под верхней панелью: при смене темы — к началу,
+  // а меню закрываем и не даём странице скроллиться под ним.
+  const pickTopic = (id) => {
+    setTopicId(id);
+    setMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
+  useEffect(() => {
+    document.body.classList.toggle("menu-open", menuOpen);
+    return () => document.body.classList.remove("menu-open");
+  }, [menuOpen]);
 
   // Подсветка всех блоков кода после смены темы/языка и после интерактивных
   // изменений (новые pre.code, например при раскрытии демо)
@@ -222,7 +235,17 @@ export default function App() {
   return (
     <LangContext.Provider value={lang}>
     <div className="app">
-      <nav className="sidebar">
+      <header className="topbar">
+        <button className="menu-btn" aria-label="Menu" onClick={() => setMenuOpen((v) => !v)}>
+          {menuOpen ? "✕" : "☰"}
+        </button>
+        <span className="topbar-title">{lang === "en" && topic.title_en ? topic.title_en : topic.title}</span>
+        <button className="topbar-lang" onClick={() => setLang(lang === "ru" ? "en" : "ru")}>
+          {lang.toUpperCase()}
+        </button>
+      </header>
+      {menuOpen && <div className="backdrop" onClick={() => setMenuOpen(false)} />}
+      <nav className={"sidebar" + (menuOpen ? " open" : "")}>
         <h2>{lang === "en" ? "Interview Trainer" : "Собес-тренажёр"}</h2>
         <div className="lang-toggle">
           {["ru", "en"].map((l) => (
@@ -242,7 +265,7 @@ export default function App() {
               <button
                 key={t.id}
                 className={t.id === topicId ? "active" : ""}
-                onClick={() => setTopicId(t.id)}
+                onClick={() => pickTopic(t.id)}
               >
                 {lang === "en" && t.title_en ? t.title_en : t.title}
               </button>

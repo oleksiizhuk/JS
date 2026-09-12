@@ -122,10 +122,14 @@ function TextMode({ units, srs }) {
                 if (!m) return <span key={i}>{p}</span>;
                 const w = byKey[m[1]];
                 const active = sel?.k === w.k;
+                const toggle = () => setSel(active ? null : w);
+                // span, а не button: кнопка не переносится по строкам, а длинная
+                // фраза должна течь как обычный текст
                 return (
-                  <button key={i} className={"en-hl" + (active ? " active" : "")} onClick={() => setSel(active ? null : w)}>
+                  <span key={i} className={"en-hl" + (active ? " active" : "")} role="button" tabIndex={0}
+                    onClick={toggle} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } }}>
                     {m[2] ?? m[1]}
-                  </button>
+                  </span>
                 );
               })}
             </p>
