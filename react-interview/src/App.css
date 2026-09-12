@@ -122,3 +122,24 @@ input.inp {
 
 .row { display: flex; gap: 16px; flex-wrap: wrap; }
 .row > .card { flex: 1; min-width: 280px; }
+
+/* English vocabulary trainer */
+.en-card .en-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap; cursor: pointer; margin-bottom: 6px; }
+.en-w { font-size: 17px; }
+.en-reg { background: #e6f0ff; }
+.en-box { background: #eef3ea; }
+.en-ru { font-size: 16px; margin: 6px 0 2px; }
+.en-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #667; font-weight: 700; margin-top: 8px; }
+.en-ex { margin: 4px 0 0; padding-left: 20px; font-size: 14.5px; }
+.en-own { width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid #c7cad6; border-radius: 8px; margin: 4px 0 8px; }
+.en-story { font-size: 16px; line-height: 1.9; }
+button.en-hl { font: inherit; background: #fff3c4; border: none; border-bottom: 2px solid #e0b93a; border-radius: 4px; padding: 0 3px; cursor: pointer; }
+button.en-hl:hover { background: #ffe9a8; }
+button.en-hl.active { background: #4f6ef7; border-color: #4f6ef7; color: #fff; }
+.en-flash { text-align: center; }
+.en-front { font-size: 26px; font-weight: 700; margin: 10px 0 4px; }
+.en-flash .en-card { text-align: left; margin-top: 12px; }
+.en-gap { font-size: 17px; line-height: 1.7; }
+.en-blank { display: inline-block; min-width: 70px; border-bottom: 2px solid #4f6ef7; font-weight: 700; color: #4f6ef7; text-align: center; padding: 0 4px; }
+button.en-opt.right { background: #d9f5df; border-color: #4caf6a; font-weight: 700; }
+button.en-opt.wrong { background: #ffd9d9; border-color: #e5484d; }

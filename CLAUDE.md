@@ -22,6 +22,10 @@ the git-workflow skill).
   `code`), and why-did-you-render. The "i18n / i18next" page uses REAL
   i18next (a separate createInstance just for the demo — the trainer's
   global RU/EN toggle stays hand-rolled `<L>`, a deliberate trade-off).
+  The "English" section (`src/english/`): a vocabulary trainer for the user's
+  English course — `units.js` holds sections of word cards + an original
+  story with `[[key]]` markers; modes: text, cards, spaced review, gaps.
+  New word lists → the english-words skill; guard: `english.test.jsx`.
   Run: `cd react-interview && npm run dev` → http://localhost:5173
   Check after changes: `npm run build && npm test` (vitest + snapshots).
 - `js-core/` — exercise files (call-bind-apply, event-loop) + the `JS-CORE.md`
@@ -55,6 +59,9 @@ Details and git rules — in the git-workflow skill.
   — code review exercise format (`src/codereview/levels/*.js`) + the check
   script for line numbers, backticks and `en`. Invoke when adding or fixing
   a code review exercise.
+- **`/english-words`** (`.claude/skills/english-words/SKILL.md`) — word-card
+  and story format for `src/english/units.js`. Invoke whenever the user
+  pastes a list of English words/phrases from their course.
 - **`/git-workflow`** (`.claude/skills/git-workflow/SKILL.md`) — commit/push
   rules, the pre-commit build+test gate, auto-deploy to GitHub Pages, what
   must never be done (force-push, breaking the `/JS/` base). Invoke for any

@@ -78,6 +78,7 @@ import CodeReviewTrainer from "./codereview/CodeReviewTrainer.jsx";
 import Quiz from "./quiz/Quiz.jsx";
 import LiveCoding from "./livecoding/LiveCoding.jsx";
 import ClaudeAi from "./topics/ClaudeAi.jsx";
+import EnglishTrainer from "./english/EnglishTrainer.jsx";
 
 const SECTIONS = [
   {
@@ -185,6 +186,13 @@ const SECTIONS = [
       { id: "quiz", title: "🎯 Квиз", title_en: "🎯 Quiz", C: Quiz },
       { id: "livecoding", title: "🧑‍💻 Live coding", C: LiveCoding },
       { id: "review-trainer", title: "🔍 Code review тренажёр ⭐", title_en: "🔍 Code review trainer ⭐", C: CodeReviewTrainer },
+    ],
+  },
+  {
+    name: "English",
+    name_en: "English",
+    topics: [
+      { id: "english-vocab", title: "🇬🇧 Словарь курса: Sections 2–4", title_en: "🇬🇧 Course vocabulary: Sections 2–4", C: EnglishTrainer },
     ],
   },
   {
