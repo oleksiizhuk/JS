@@ -192,7 +192,7 @@ const SECTIONS = [
     name: "English",
     name_en: "English",
     topics: [
-      { id: "english-vocab", title: "🇬🇧 Словарь курса: Sections 2–4", title_en: "🇬🇧 Course vocabulary: Sections 2–4", C: EnglishTrainer },
+      { id: "english-vocab", title: "🇬🇧 Словарь курса: Sections 2–5", title_en: "🇬🇧 Course vocabulary: Sections 2–5", C: EnglishTrainer },
     ],
   },
   {
