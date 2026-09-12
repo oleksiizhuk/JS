@@ -26,8 +26,11 @@ them and blocks the deploy, and the README badge turns red.
   "update").
 - Body — a bulleted list of the key changes (what and why), also in Russian;
   technical terms in English.
-- Mandatory trailer as the last line:
-  `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>`
+- Mandatory trailers at the end: the `Co-Authored-By` line for the model
+  doing the work (currently `Claude Fable 5.1 <noreply@anthropic.com>`) and,
+  when the session provides one, its `Claude-Session: <url>` line. Take
+  both from the attribution block the session gives you — don't invent or
+  reuse a URL from an older commit.
 
 Example:
 
@@ -37,7 +40,8 @@ Example:
 - React · i18n: плюрализация, Trans, Intl (двуязычные, длины сбалансированы)
 - вопрос про модели: голые названия вместо дескрипторов-подсказок
 
-Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_...
 ```
 
 ## Never do

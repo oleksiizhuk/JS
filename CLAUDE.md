@@ -47,6 +47,14 @@ Details and git rules — in the git-workflow skill.
   question format and rules ({ t, q, o[4], a, e }; sections JS/React/Redux/
   Native/GraphQL/TS/EnginX/Claude). Invoke when adding questions to
   `src/quiz/questions.js`.
+- **`/livecoding-task`** (`.claude/skills/livecoding-task/SKILL.md`) — live
+  coding task format (`src/livecoding/tasks.js`) + the check script that
+  runs every solution through its own tests. Invoke when adding or fixing
+  a live coding task.
+- **`/codereview-exercise`** (`.claude/skills/codereview-exercise/SKILL.md`)
+  — code review exercise format (`src/codereview/levels/*.js`) + the check
+  script for line numbers, backticks and `en`. Invoke when adding or fixing
+  a code review exercise.
 - **`/git-workflow`** (`.claude/skills/git-workflow/SKILL.md`) — commit/push
   rules, the pre-commit build+test gate, auto-deploy to GitHub Pages, what
   must never be done (force-push, breaking the `/JS/` base). Invoke for any
