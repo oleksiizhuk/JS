@@ -3,3 +3,6 @@ dist/
 .DS_Store
 .idea/
 *.log
+
+# temporary agent worktrees
+.claude/worktrees/

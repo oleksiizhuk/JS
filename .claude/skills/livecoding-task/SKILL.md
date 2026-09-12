@@ -52,7 +52,10 @@ defined at the top of tasks.js — use them, don't add new helpers per task.
 - **Tests run in the browser** via `new Function`: no imports, no Node APIs,
   no shared mutable state between tests. Async tests must settle — a test
   that waits for a callback the user never calls hangs forever; add a
-  timeout inside the test if the API is callback-based.
+  timeout inside the test if the API is callback-based. When a test reads
+  `this` inside the user's callback, use `this?.x` — a wrong solution (an
+  arrow function) should fail with a clean red test, not with an uncaught
+  error thrown from inside `setTimeout`.
 - **Keep `solution` interview-idiomatic**, not the shortest possible:
   comments on the non-obvious line, and a second variant when the interview
   bonus asks for one ("without `.reverse()`"). `notes` = what to SAY out

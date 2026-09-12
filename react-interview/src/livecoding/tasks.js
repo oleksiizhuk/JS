@@ -803,6 +803,195 @@ function flatten2(arr) {
     },
   },
   {
+    id: "debounce-cancel-flush",
+    title: "Async: debounce с leading / cancel / flush",
+    level: "hard",
+    brief: "debounce «как в lodash»: опции leading/trailing, методы cancel() и flush(), сохранение this.",
+    description:
+      "Напиши debounce(fn, ms, options) — продвинутую версию задачи «debounce». Требования: 1) по умолчанию trailing — fn вызывается один раз через ms после последнего вызова, с последними аргументами; 2) options.leading = true — первый вызов серии срабатывает сразу, а trailing-вызов в конце происходит только если после него были ещё вызовы; 3) options.trailing = false отключает вызов в конце серии; 4) у возвращённой функции есть cancel() — отменяет ожидающий вызов, и flush() — выполняет его немедленно (если ожидающего нет — ничего не делает); 5) this внутри fn — тот, с которым вызвали debounced-функцию.",
+    fnName: "debounce",
+    starter: `function debounce(fn, ms, options = {}) {
+  // твой код
+}`,
+    tests: [
+      {
+        name: "базовый trailing: d(1); d(2); d(3) → один вызов с 3",
+        run: async (fn) => {
+          let calls = 0, last = null;
+          const d = fn((x) => { calls++; last = x; }, 30);
+          d(1); d(2); d(3);
+          assertEq(calls, 0, "до истечения ms вызова нет");
+          await sleep(60);
+          assertEq(calls, 1, "число вызовов");
+          assertEq(last, 3, "аргумент");
+        },
+      },
+      {
+        name: "cancel(): ожидающий вызов не происходит",
+        run: async (fn) => {
+          let calls = 0;
+          const d = fn(() => calls++, 30);
+          d(); d();
+          d.cancel();
+          await sleep(60);
+          assertEq(calls, 0, "после cancel");
+          d();                                 // после cancel функция снова работает
+          await sleep(60);
+          assertEq(calls, 1, "новая серия после cancel");
+        },
+      },
+      {
+        name: "flush(): вызов сразу, с последними аргументами, и без повтора по таймеру",
+        run: async (fn) => {
+          let calls = 0, last = null;
+          const d = fn((x) => { calls++; last = x; }, 30);
+          d(1); d(2);
+          d.flush();
+          assertEq(calls, 1, "сразу после flush");
+          assertEq(last, 2, "аргумент");
+          await sleep(60);
+          assertEq(calls, 1, "таймер не должен вызвать второй раз");
+          d.flush();
+          assertEq(calls, 1, "flush без ожидающего вызова — ничего не делает");
+        },
+      },
+      {
+        name: "{ leading: true }: d(1); d(2); d(3) → сразу с 1, затем trailing с 3",
+        run: async (fn) => {
+          const got = [];
+          const d = fn((x) => got.push(x), 30, { leading: true });
+          d(1); d(2); d(3);
+          assertEq(got, [1], "первый вызов серии — сразу");
+          await sleep(60);
+          assertEq(got, [1, 3], "в конце серии — с последними аргументами");
+        },
+      },
+      {
+        name: "{ leading: true }: одиночный вызов не дублируется trailing-вызовом",
+        run: async (fn) => {
+          let calls = 0;
+          const d = fn(() => calls++, 30, { leading: true });
+          d();
+          assertEq(calls, 1, "сразу");
+          await sleep(60);
+          assertEq(calls, 1, "trailing не нужен — вызовов после leading не было");
+        },
+      },
+      {
+        name: "{ leading: true, trailing: false }: только первый вызов серии",
+        run: async (fn) => {
+          const got = [];
+          const d = fn((x) => got.push(x), 30, { leading: true, trailing: false });
+          d(1); d(2);
+          await sleep(60);
+          assertEq(got, [1], "trailing отключён");
+          d(3);                                // новая серия — снова leading
+          await sleep(60);
+          assertEq(got, [1, 3], "новая серия");
+        },
+      },
+      {
+        name: "this сохраняется: obj.method() → this === obj",
+        run: async (fn) => {
+          let seen = null;
+          const obj = { value: 42, method: fn(function () { seen = this.value; }, 20) };
+          obj.method();
+          await sleep(40);
+          assertEq(seen, 42, "this.value");
+        },
+      },
+    ],
+    solution: `function debounce(fn, ms, { leading = false, trailing = true } = {}) {
+  let timer = null;
+  let pending = null;                   // { ctx, args } последнего «не отработанного» вызова
+
+  const invoke = () => {
+    const { ctx, args } = pending;
+    pending = null;                     // сбрасываем ДО вызова — fn может дёрнуть debounced снова
+    fn.apply(ctx, args);
+  };
+
+  function debounced(...args) {         // обычная function — нужен свой this
+    const isFirst = timer === null;     // нет таймера = начало новой серии
+    clearTimeout(timer);
+    if (leading && isFirst) {
+      fn.apply(this, args);             // leading: первый вызов серии — сразу
+    } else {
+      pending = { ctx: this, args };    // остальные копим для trailing-вызова
+    }
+    timer = setTimeout(() => {
+      timer = null;
+      if (trailing && pending) invoke();
+      else pending = null;              // trailing выключен — просто забываем
+    }, ms);
+  }
+
+  debounced.cancel = () => {
+    clearTimeout(timer);
+    timer = null;
+    pending = null;
+  };
+  debounced.flush = () => {
+    if (!pending) return;               // нечего выполнять
+    clearTimeout(timer);
+    timer = null;
+    invoke();
+  };
+  return debounced;
+}`,
+    notes:
+      "Проверяют не setTimeout, а умение держать состояние в замыкании: таймер (есть ли активная серия), pending (что вызвать в конце) и их согласованность в cancel/flush. Ключевые моменты, которые стоит проговорить: debounced — обычная function, а не стрелка, чтобы пробросить this через fn.apply; leading без pending не должен давать второй вызов; pending сбрасывается до fn.apply, иначе рекурсивный вызов debounced внутри fn затрёт состояние. Бонус: cancel() в cleanup useEffect, чтобы не дёрнуть setState на размонтированном компоненте; чем это отличается от throttle (гарантированная частота, а не «после тишины»).",
+    en: {
+      title: "Async: debounce with leading / cancel / flush",
+      brief: "lodash-style debounce: leading/trailing options, cancel() and flush() methods, this preserved.",
+      description:
+        "Write debounce(fn, ms, options) — the advanced version of the \"debounce\" task. Requirements: 1) trailing by default — fn is called once, ms after the last call, with the last call's arguments; 2) options.leading = true — the first call of a burst fires immediately, and the trailing call at the end happens only if there were more calls after it; 3) options.trailing = false disables the call at the end of the burst; 4) the returned function has cancel() — drops the pending call, and flush() — runs it immediately (does nothing if there is no pending call); 5) this inside fn is whatever the debounced function was called with.",
+      starter: `function debounce(fn, ms, options = {}) {
+  // your code
+}`,
+      solution: `function debounce(fn, ms, { leading = false, trailing = true } = {}) {
+  let timer = null;
+  let pending = null;                   // { ctx, args } of the last call not yet executed
+
+  const invoke = () => {
+    const { ctx, args } = pending;
+    pending = null;                     // reset BEFORE calling — fn may call debounced again
+    fn.apply(ctx, args);
+  };
+
+  function debounced(...args) {         // a regular function — it needs its own this
+    const isFirst = timer === null;     // no timer = a new burst starts
+    clearTimeout(timer);
+    if (leading && isFirst) {
+      fn.apply(this, args);             // leading: the first call of a burst fires right away
+    } else {
+      pending = { ctx: this, args };    // the rest is kept for the trailing call
+    }
+    timer = setTimeout(() => {
+      timer = null;
+      if (trailing && pending) invoke();
+      else pending = null;              // trailing is off — just forget it
+    }, ms);
+  }
+
+  debounced.cancel = () => {
+    clearTimeout(timer);
+    timer = null;
+    pending = null;
+  };
+  debounced.flush = () => {
+    if (!pending) return;               // nothing to run
+    clearTimeout(timer);
+    timer = null;
+    invoke();
+  };
+  return debounced;
+}`,
+      notes:
+        "What's tested is not setTimeout but keeping state in a closure: the timer (is a burst active?), pending (what to call at the end) and keeping them consistent in cancel/flush. Points worth saying out loud: debounced is a regular function, not an arrow, so this can be forwarded via fn.apply; leading without a pending call must not produce a second call; pending is reset before fn.apply, otherwise a recursive debounced call inside fn would clobber the state. Bonus: cancel() in a useEffect cleanup so setState isn't fired on an unmounted component; how this differs from throttle (a guaranteed rate rather than \"after quiet\").",
+    },
+  },
+  {
     id: "event-emitter",
     title: "EventEmitter",
     level: "hard",

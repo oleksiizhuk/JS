@@ -291,6 +291,44 @@ export const JS_QUESTIONS = [
     },
   },
   {
+    t: "JS · Closure",
+    q: "debounce с опцией leading (как в lodash). Что выведет через 200 мс?\nconst d = debounce((x) => console.log(x), 100, { leading: true });\nd(1); d(2); d(3);",
+    o: ["1, потом 3", "только 3", "только 1", "1, 2, 3"],
+    a: 0,
+    e: "leading: первый вызов серии срабатывает сразу (1). Дальнейшие вызовы копятся, и через 100 мс тишины срабатывает trailing-вызов с последними аргументами (3). «Только 3» — это debounce по умолчанию, «только 1» — leading: true, trailing: false.",
+    en: {
+      t: "JS · Closure",
+      q: "debounce with the leading option (lodash-style). What is logged after 200 ms?\nconst d = debounce((x) => console.log(x), 100, { leading: true });\nd(1); d(2); d(3);",
+      o: ["1, then 3", "only 3", "only 1", "1, 2, 3"],
+      a: 0,
+      e: "leading: the first call of a burst fires right away (1). The following calls are collected, and after 100 ms of quiet the trailing call fires with the last arguments (3). \"Only 3\" is the default debounce, \"only 1\" is leading: true, trailing: false.",
+    },
+  },
+  {
+    t: "JS · Closure",
+    q: "В реализации debounce возвращают обычную function debounced(...args), а не стрелку. Зачем?",
+    o: [
+      "Стрелке нельзя дописать свойства cancel и flush — методы навешиваются только на обычную function",
+      "Стрелка берёт this из замыкания, а обычная function получает this из вызова obj.method() и пробрасывает его через fn.apply",
+      "Стрелочные функции не поддерживают rest-параметры ...args, а без них не собрать аргументы последнего вызова",
+      "Обычная function поднимается (hoisting), поэтому её можно вернуть раньше, чем объявлен таймер в замыкании",
+    ],
+    a: 1,
+    e: "У стрелки нет своего this — она возьмёт this внешней функции debounce (undefined в strict mode). Обычная function получает this от вызова obj.method(), и мы передаём его дальше через fn.apply(this, args). Свойства можно навесить на любую функцию, rest-параметры у стрелок есть, hoisting тут не при чём.",
+    en: {
+      t: "JS · Closure",
+      q: "A debounce implementation returns a regular function debounced(...args) rather than an arrow. Why?",
+      o: [
+        "You cannot attach cancel and flush properties to an arrow — methods can only be hung on a regular function",
+        "An arrow takes this from the closure, while a regular function receives this from the obj.method() call and forwards it via fn.apply",
+        "Arrow functions do not support rest parameters ...args, and without them you cannot collect the last call's arguments",
+        "A regular function is hoisted, so it can be returned before the timer variable in the closure is declared",
+      ],
+      a: 1,
+      e: "An arrow has no this of its own — it would take the this of the outer debounce function (undefined in strict mode). A regular function receives this from the obj.method() call, and we forward it via fn.apply(this, args). Properties can be attached to any function, arrows do have rest parameters, and hoisting is irrelevant here.",
+    },
+  },
+  {
     t: "JS · Destructuring",
     q: "const { name: userName } = user; — что делает эта запись?",
     o: [
