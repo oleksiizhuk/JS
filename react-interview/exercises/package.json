@@ -1,0 +1,6 @@
+{
+  "name": "js-exercises",
+  "private": true,
+  "type": "commonjs",
+  "description": "Standalone JS exercises (node <file>.ts). CommonJS on purpose: `this` puzzles rely on sloppy-mode semantics that ESM would change."
+}

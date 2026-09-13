@@ -11,13 +11,14 @@ coding and the code review trainer included, no install needed.
 
 ## react-interview/ — the interview trainer (main app)
 
-Vite + React. Run locally:
+Vite + React + TypeScript (strict). Run locally:
 
 ```bash
 cd react-interview
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # production build
+npm run build      # tsc --noEmit + production build
+npm run typecheck  # types only
 npm test           # vitest: snapshot, regression and translation-guard tests
 ```
 
@@ -48,14 +49,21 @@ Sections:
 
 ## Other folders
 
-- `js-core/` — standalone exercises: `call-bind-apply.js` (8 `this` puzzles,
-  run with `node js-core/call-bind-apply.js`), `event-loop.js`
-  (micro- vs macrotasks ordering), plus the `JS-CORE.md` summary
-- `react-notes/` — notes: `prop-drilling.jsx` (prop drilling and 3 fixes:
-  composition / context / store)
-- `live-coding/` — classic tasks: `reverse-string.js` and friends
-- Plus a few legacy JS practice files in the repo root (closures, event loop,
-  leetcode, recursion) from earlier study rounds
+- `react-interview/exercises/` — standalone JS Core scripts (run with
+  `node exercises/<dir>/<file>.ts` from `react-interview/`): closures,
+  `this` / call-bind-apply, event loop ordering, Map/Set/WeakMap/WeakSet,
+  promises (all / allSettled / any / race / withResolvers), prototypes,
+  leetcode, `reverse-string`, plus the `js-core/JS-CORE.md` summary. See
+  `exercises/README.md`
+- `react-interview/exercises/react-notes/prop-drilling.tsx` — a read-only
+  note: prop drilling and 3 fixes (composition / context / store)
+- Plus a few legacy JS practice files in the repo root (TDZ, curry, recursion,
+  linked list…) from earlier study rounds
+
+- **English** — the vocabulary trainer for the user's English course: text
+  with highlighted words, cards, spaced review, gap-fill and a **Grammar**
+  mode (C1 constructions from the unit text: quote → rule → pattern → trap →
+  task with a hidden answer)
 
 ## Deployment
 
@@ -63,7 +71,7 @@ The site auto-deploys to **GitHub Pages** on every push to `main`
 (`.github/workflows/deploy.yml`): `npm ci → npm test → npm run build` →
 publish `react-interview/dist`. Tests gate the deploy — a red build never
 ships. Production is served from `/JS/` (the repo name), configured via
-`base` in `vite.config.js`; local dev stays at the root.
+`base` in `vite.config.ts`; local dev stays at the root.
 
 ## Development notes
 

@@ -6,7 +6,7 @@ import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
 
 const onlyId = process.argv[2];
-const { TASKS } = await import(pathToFileURL(resolve("src/livecoding/tasks.js")).href);
+const { TASKS } = await import(pathToFileURL(resolve("src/livecoding/tasks.ts")).href);
 
 const LEVELS = new Set(["easy", "medium", "hard"]);
 const EN_FIELDS = ["title", "brief", "description", "starter", "solution", "notes"];

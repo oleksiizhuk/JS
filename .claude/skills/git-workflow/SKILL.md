@@ -51,7 +51,7 @@ Claude-Session: https://claude.ai/code/session_...
   lost.
 - Don't commit `node_modules/`, `dist/`, `.idea/`, `.DS_Store` — they're in
   `.gitignore`; if `git status` shows them, the ignore setup is broken.
-- Don't change `base: '/JS/'` in `react-interview/vite.config.js` or the
+- Don't change `base: '/JS/'` in `react-interview/vite.config.ts` or the
   `react-interview/dist` path in the workflow — Pages depends on them.
   Renaming the repository = update the base, the README links and the badge.
 

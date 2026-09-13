@@ -1,12 +1,12 @@
 ---
 name: english-words
-description: How to add a new section of English vocabulary to the interview trainer (react-interview/src/english/units.js) — the word-card format (ru, definition, register, examples, usage note with a trap, gap sentence), the story with [[key]] markers, and the guard test. Use whenever the user pastes a list of English words or phrases from their course ("Section 5", "новые слова", "добавь раздел по английскому") or asks to fix a word card.
+description: How to add a new section of English vocabulary to the interview trainer (react-interview/src/english/units.ts) — the word-card format (ru, definition, register, examples, usage note with a trap, gap sentence), the story with [[key]] markers, and the guard test. Use whenever the user pastes a list of English words or phrases from their course ("Section 5", "новые слова", "добавь раздел по английскому") or asks to fix a word card.
 ---
 
 # English vocabulary: adding a section
 
-The page «English → Словарь курса» (`src/english/EnglishTrainer.jsx`) has four
-modes built on one data file, `src/english/units.js`: 📖 Text (a story with
+The page «English → Словарь курса» (`src/english/EnglishTrainer.tsx`) has four
+modes built on one data file, `src/english/units.ts`: 📖 Text (a story with
 the words highlighted), 🃏 Words (reveal cards + the user's own sentence),
 🔁 Review (Leitner boxes in localStorage), ✍️ Gaps (fill-the-blank with 4
 options from the same section). One new unit in `UNITS` = all four modes
@@ -70,7 +70,7 @@ cd react-interview && npm test -- english   # data guard + render smoke test
 npm run build
 ```
 
-The guard (`src/__tests__/english.test.jsx`) fails on: a missing field, a
+The guard (`src/__tests__/english.test.tsx`) fails on: a missing field, a
 `[[marker]]` that matches no `k`, a word absent from the story, a gap
 sentence without exactly one `___`, fewer than 4 distinct answers per unit.
-Update the page title in `App.jsx` («Sections 2–4» → the new range).
+Update the page title in `App.tsx` («Sections 2–4» → the new range).

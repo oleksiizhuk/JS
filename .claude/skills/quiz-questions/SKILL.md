@@ -1,17 +1,17 @@
 ---
 name: quiz-questions
-description: Format and rules for writing quiz questions for the interview trainer (react-interview/src/quiz/questions.js). Use when adding questions for a new topic or growing the bank.
+description: Format and rules for writing quiz questions for the interview trainer (react-interview/src/quiz/questions.ts). Use when adding questions for a new topic or growing the bank.
 ---
 
 # Quiz: question format
 
 The bank is split by section: `react-interview/src/quiz/sections/{js,react,
-redux,native,graphql,ts,enginx,claude}.js` — each exports an array
-(`JS_QUESTIONS`, `REACT_QUESTIONS`, …). `quiz/questions.js` only concatenates
+redux,native,graphql,ts,enginx,claude}.ts` — each exports an array
+(`JS_QUESTIONS`, `REACT_QUESTIONS`, …). `quiz/questions.ts` only concatenates
 them into `QUESTIONS` in section order. When adding questions, edit the
 relevant section file; a new section = a new file + an import in
-`questions.js` + an entry in `SECTION_LABELS` in `Quiz.jsx`.
-Engine: `src/quiz/Quiz.jsx` — shuffles questions, never repeats across runs
+`questions.ts` + an entry in `SECTION_LABELS` in `Quiz.tsx`.
+Engine: `src/quiz/Quiz.tsx` — shuffles questions, never repeats across runs
 (localStorage `quiz-seen`); on start the user picks sections via checkboxes
 and a size (10/20/50).
 
@@ -36,7 +36,7 @@ are in Russian in the ru fields, English in `en`.
 ## Sections (the `t` prefix)
 
 `JS`, `React`, `Redux`, `Native`, `GraphQL`, `TS`, `EnginX`, `Claude` — add
-new sections to `SECTION_LABELS` in Quiz.jsx as well. Group questions in the
+new sections to `SECTION_LABELS` in Quiz.tsx as well. Group questions in the
 bank by section (separator comments `// ═══ SECTION ═══`), then by subtopic.
 
 ## Question quality rules
@@ -71,7 +71,7 @@ bank by section (separator comments `// ═══ SECTION ═══`), then by s
 cd react-interview && npm run build   # a syntax error fails the build
 
 # Balance and validity check (rules 6-8):
-node -e "import('./src/quiz/questions.js').then(({QUESTIONS})=>{
+node -e "import('./src/quiz/questions.ts').then(({QUESTIONS})=>{
   const by={}; const bad=[];
   QUESTIONS.forEach((q,i)=>{
     const s=q.t.split(' · ')[0]; by[s]=(by[s]||0)+1;

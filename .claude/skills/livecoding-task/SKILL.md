@@ -1,14 +1,14 @@
 ---
 name: livecoding-task
-description: Format and rules for live coding tasks in the interview trainer (react-interview/src/livecoding/tasks.js) — task object, in-browser tests, reference solution, bilingual en block, and the mandatory self-check script. Use whenever adding, rewriting or debugging a live coding task, even if the user just says "add a task about debounce/curry/flatten" or "the tests in live coding are wrong".
+description: Format and rules for live coding tasks in the interview trainer (react-interview/src/livecoding/tasks.ts) — task object, in-browser tests, reference solution, bilingual en block, and the mandatory self-check script. Use whenever adding, rewriting or debugging a live coding task, even if the user just says "add a task about debounce/curry/flatten" or "the tests in live coding are wrong".
 ---
 
 # Live coding: task format
 
-The trainer (`react-interview/src/livecoding/LiveCoding.jsx`) shows the task,
+The trainer (`react-interview/src/livecoding/LiveCoding.tsx`) shows the task,
 gives the user an editor pre-filled with `starter`, runs the user's code with
 `new Function(code + "return " + fnName)` and executes every test against the
-returned function. Tasks live in `src/livecoding/tasks.js` (the `TASKS`
+returned function. Tasks live in `src/livecoding/tasks.ts` (the `TASKS`
 array), grouped by level with `// ═══ EASY / MEDIUM / HARD ═══` separators.
 The user practises the way an interview goes: reads the brief, writes code,
 runs tests, then compares with `solution` + `notes`.
@@ -34,7 +34,7 @@ runs tests, then compares with `solution` + `notes`.
 ```
 
 `assertEq(actual, expected, label)` and `assert(cond, msg)` are already
-defined at the top of tasks.js — use them, don't add new helpers per task.
+defined at the top of tasks.ts — use them, don't add new helpers per task.
 `sleep(ms)` is exported for async tasks.
 
 ## Why each rule exists

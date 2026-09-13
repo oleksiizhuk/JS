@@ -6,7 +6,7 @@ import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
 
 const onlyId = process.argv[2];
-const { EXERCISES } = await import(pathToFileURL(resolve("src/codereview/exercises.js")).href);
+const { EXERCISES } = await import(pathToFileURL(resolve("src/codereview/exercises.ts")).href);
 
 const LEVELS = new Set(["easy", "medium", "hard"]);
 const SEVERITIES = new Set(["blocker", "major", "nit"]);

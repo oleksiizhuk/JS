@@ -1,18 +1,18 @@
 ---
 name: codereview-exercise
-description: Format and rules for code review trainer exercises in react-interview/src/codereview/levels/{easy,medium,hard}.js — code with planted issues, 1-based issue.lines, severity, bilingual en, plus the check script. Use whenever adding, editing or fixing a code review exercise, even if the user only says "add a code review about race conditions" or "the highlighted lines in code review are off".
+description: Format and rules for code review trainer exercises in react-interview/src/codereview/levels/{easy,medium,hard}.ts — code with planted issues, 1-based issue.lines, severity, bilingual en, plus the check script. Use whenever adding, editing or fixing a code review exercise, even if the user only says "add a code review about race conditions" or "the highlighted lines in code review are off".
 ---
 
 # Code review trainer: exercise format
 
-The trainer (`react-interview/src/codereview/CodeReviewTrainer.jsx`) shows a
+The trainer (`react-interview/src/codereview/CodeReviewTrainer.tsx`) shows a
 snippet as a fake pull request. The user clicks the lines they consider
 problematic, then reveals the answer: every planted `issue` with its lines,
 severity, explanation and fix. Clicks on lines not listed in any issue count
 as **false positives** — so unmarked lines must be genuinely clean.
 
-Exercises live in `src/codereview/levels/{easy,medium,hard}.js` (arrays
-`EASY_EXERCISES` / `MEDIUM_EXERCISES` / `HARD_EXERCISES`); `exercises.js`
+Exercises live in `src/codereview/levels/{easy,medium,hard}.ts` (arrays
+`EASY_EXERCISES` / `MEDIUM_EXERCISES` / `HARD_EXERCISES`); `exercises.ts`
 merges them and holds four legacy base exercises — don't add new ones there.
 
 ## Exercise object
