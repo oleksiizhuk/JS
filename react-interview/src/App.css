@@ -160,6 +160,8 @@ input.inp {
 .en-mark { background: #ffe9a8; border-bottom: 2px solid #e0b93a; border-radius: 4px; padding: 0 3px; font-style: normal; font-weight: 600; }
 .en-pattern { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13.5px; background: #eef3ea; border-radius: 6px; padding: 8px 12px; margin: 4px 0; }
 .en-answer { margin-top: 8px; }
+.en-focus { outline: 2px solid #4f6ef7; outline-offset: 2px; }
+.card { scroll-margin-top: 12px; }
 button.en-opt.right { background: #d9f5df; border-color: #4caf6a; font-weight: 700; }
 button.en-opt.wrong { background: #ffd9d9; border-color: #e5484d; }
 
@@ -211,7 +213,7 @@ button.en-opt.wrong { background: #ffd9d9; border-color: #e5484d; }
     overflow-x: hidden;
   }
   .content h1 { font-size: 22px; }
-  .card { padding: 12px 14px; border-radius: 10px; }
+  .card { padding: 12px 14px; border-radius: 10px; scroll-margin-top: 64px; } /* под sticky-панелью */
   .row > .card { min-width: 0; }
   pre.code { font-size: 12px; padding: 10px 12px; }
   button.btn { min-height: 40px; }

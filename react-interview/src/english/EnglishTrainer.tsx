@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { UNITS } from "./units";
 import type { Unit, Word } from "./units";
-import { GRAMMAR } from "./grammar";
+import { GRAMMAR, GRAMMAR_TEXTS } from "./grammar";
 import type { GrammarPoint } from "./grammar";
 import { useLang } from "../LangContext";
 import type { Lang } from "../LangContext";
@@ -25,6 +25,7 @@ type UiText = {
   gapTitle: string; score: (ok: number, all: number) => string; next: string; restart: string;
   right: string; wrong: string; gapDone: string; reset: string; resetConfirm: string; boxes: string;
   grammarIntro: string; grammarNone: string; grammarRu: string; rule: string; pattern: string; trap: string; tryIt: string;
+  sourceText: string; textHint: string; hideText: string; showText: string; inText: string;
 };
 
 const UI: Record<Lang, UiText> = {
@@ -45,6 +46,7 @@ const UI: Record<Lang, UiText> = {
     grammarIntro: "Конструкции уровня C1 из текста раздела. Прочитай цитату и попробуй сам сформулировать правило — потом сверься. В конце карточки задание: сначала ответь, потом раскрывай.",
     grammarNone: "Для выбранных разделов разбора грамматики пока нет (есть для Section 2).",
     grammarRu: "🇷🇺 Дублировать по-русски", rule: "Правило", pattern: "Формула", trap: "Ловушка", tryIt: "Попробуй",
+    sourceText: "Текст", textHint: "Кликни подсвеченную фразу — перейдёшь к её правилу.", hideText: "Свернуть текст", showText: "Показать текст", inText: "↑ в тексте",
   },
   en: {
     units: "Sections", modes: { text: "📖 Text", words: "🃏 Words", srs: "🔁 Review", gaps: "✍️ Gaps", grammar: "📐 Grammar" },
@@ -63,6 +65,7 @@ const UI: Record<Lang, UiText> = {
     grammarIntro: "C1 structures from the section text. Read the quote and try to state the rule yourself, then check. Each card ends with a task: answer first, then reveal.",
     grammarNone: "No grammar notes for the selected sections yet (available for Section 2).",
     grammarRu: "🇷🇺 Also in Russian", rule: "Rule", pattern: "Pattern", trap: "Trap", tryIt: "Try it",
+    sourceText: "Source text", textHint: "Click a highlighted phrase to jump to its rule.", hideText: "Hide text", showText: "Show text", inText: "↑ in the text",
   },
 };
 
@@ -337,27 +340,80 @@ function Marked({ text }: { text: string }) {
     p.startsWith("**") ? <mark key={i} className="en-mark">{p.slice(2, -2)}</mark> : <span key={i}>{p}</span>
   );
 }
+// Исходный текст с размеченными [[id|фраза]]: клик ведёт к карточке правила
+function SourceText({ units, onJump }: { units: Unit[]; onJump: (id: string) => void }) {
+  const lang = useLang();
+  const T = UI[lang];
+  const [open, setOpen] = useState(true);
+  const texts = units.filter((u) => GRAMMAR_TEXTS[u.id]);
+  if (!texts.length) return null;
+  return (
+    <div className="card">
+      <h3 style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+        {T.sourceText}
+        <button className="btn" onClick={() => setOpen((v) => !v)}>{open ? T.hideText : T.showText}</button>
+      </h3>
+      {open && (
+        <>
+          <p className="hint">{T.textHint}</p>
+          {texts.map((u) => (
+            <div key={u.id}>
+              <div className="en-label">{lang === "en" ? u.title_en : u.title}</div>
+              {GRAMMAR_TEXTS[u.id].map((para, i) => (
+                <p className="en-story" key={i}>
+                  {para.speaker && <b>{para.speaker}: </b>}
+                  {para.text.split(/(\[\[.+?\]\])/g).map((part, j) => {
+                    const m = part.match(/^\[\[(.+?)\|(.+)\]\]$/);
+                    if (!m) return <span key={j}>{part}</span>;
+                    return (
+                      <span key={j} className="en-hl" role="button" tabIndex={0} title={m[1]}
+                        onClick={() => onJump(m[1])}
+                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onJump(m[1]); } }}>
+                        {m[2]}
+                      </span>
+                    );
+                  })}
+                </p>
+              ))}
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  );
+}
+
 function GrammarMode({ units }: { units: Unit[] }) {
   const lang = useLang();
   const T = UI[lang];
   const [ru, setRu] = useState(false); // EN-интерфейс: показать пояснения ещё и по-русски
   const [revealed, setRevealed] = useState(() => new Set<string>());
+  const [focus, setFocus] = useState<string | null>(null); // карточка, к которой перешли из текста
   const points: { unit: Unit; p: GrammarPoint }[] = units.flatMap((u) => (GRAMMAR[u.id] ?? []).map((p) => ({ unit: u, p })));
   if (!points.length) return <div className="card"><p className="hint">{T.grammarNone}</p></div>;
   const en = lang === "en";
   const dupRu = en && ru;
   const reveal = (id: string) => setRevealed((s) => new Set(s).add(id));
+  const jump = (id: string) => {
+    setFocus(id);
+    document.getElementById("gr-" + id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const backToText = () => document.getElementById("gr-text")?.scrollIntoView({ behavior: "smooth", block: "start" });
   return (
     <>
       <div className="card">
         <p className="hint">{T.grammarIntro}</p>
         {en && <button className={"btn" + (ru ? " primary" : "")} onClick={() => setRu((v) => !v)}>{T.grammarRu}</button>}
       </div>
+      <div id="gr-text"><SourceText units={units} onJump={jump} /></div>
       {points.map(({ unit, p }) => {
         const note = en ? p.task.note_en : p.task.note;
         return (
-          <div className="card" key={p.id}>
-            <div className="hint">{en ? unit.title_en : unit.title}</div>
+          <div className={"card" + (focus === p.id ? " en-focus" : "")} key={p.id} id={"gr-" + p.id}>
+            <div className="hint" style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+              <span>{en ? unit.title_en : unit.title}</span>
+              <a href="#gr-text" onClick={(e) => { e.preventDefault(); backToText(); }}>{T.inText}</a>
+            </div>
             <h3>{en ? p.title_en : p.title}</h3>
             <blockquote className="en-quote"><Marked text={p.quote} /></blockquote>
             <div className="en-label">{T.rule}</div>

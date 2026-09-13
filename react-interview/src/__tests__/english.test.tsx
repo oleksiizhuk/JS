@@ -6,7 +6,7 @@ import { describe, expect, test } from "vitest";
 import { UNITS, ALL_WORDS } from "../english/units";
 import type { Word } from "../english/units";
 import EnglishTrainer from "../english/EnglishTrainer";
-import { GRAMMAR } from "../english/grammar";
+import { GRAMMAR, GRAMMAR_TEXTS } from "../english/grammar";
 import type { GrammarPoint } from "../english/grammar";
 
 const FIELDS: (keyof Word)[] = ["k", "w", "form", "ru", "def", "reg", "ex", "use", "use_en", "gap"];
@@ -42,6 +42,20 @@ describe("english/grammar.ts", () => {
     for (const unit of Object.keys(GRAMMAR)) expect(ids.has(unit)).toBe(true);
     expect(new Set(points.map(({ p }) => p.id)).size).toBe(points.length);
   });
+  test("маркеры [[id|фраза]] в тексте ссылаются на существующие правила, каждое правило есть в тексте", () => {
+    for (const [unit, paras] of Object.entries(GRAMMAR_TEXTS)) {
+      const ids = new Set((GRAMMAR[unit] ?? []).map((p) => p.id));
+      const used = new Set<string>();
+      for (const { text } of paras) {
+        expect(text, unit + ": незакрытый маркер").not.toMatch(/\[\[[^\]]*$/);
+        for (const m of text.matchAll(/\[\[(.+?)\|(.+?)\]\]/g)) {
+          expect(ids.has(m[1]), `${unit}: маркер ${m[1]} без правила`).toBe(true);
+          used.add(m[1]);
+        }
+      }
+      for (const id of ids) expect(used.has(id), `${unit}: правило ${id} не размечено в тексте`).toBe(true);
+    }
+  });
   test.each(points.map(({ unit, p }) => [unit + "/" + p.id, p]))("%s — карточка полная", (_name, p) => {
     for (const f of TEXT) expect(String(p[f]).trim().length, f).toBeGreaterThan(0);
     expect(p.quote, "quote без **выделения**").toMatch(/\*\*.+?\*\*/);
@@ -60,6 +74,8 @@ describe("EnglishTrainer", () => {
     }
     // режим Grammar: ответ на задание скрыт, пока не нажали «Показать ответ»
     fireEvent.click(screen.getByText("📐 Грамматика"));
+    expect(screen.getByText(/Radio announcer/)).toBeTruthy(); // исходный текст на месте
+    fireEvent.click(screen.getByTitle("having-left")); // клик по фразе в тексте не падает (scrollIntoView в jsdom нет)
     expect(screen.queryByText(/The manager having approved/)).toBeNull();
     fireEvent.click(screen.getAllByText("Показать ответ")[0]);
     expect(screen.getByText(/The manager having approved/)).toBeTruthy();

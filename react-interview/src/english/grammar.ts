@@ -18,6 +18,44 @@ export type GrammarPoint = {
   task: { q: string; q_en: string; a: string; note?: string; note_en?: string };
 };
 
+// Исходный текст раздела: конструкции размечены [[id|фраза]], id — из GRAMMAR[unit].
+// Клик по фразе на странице ведёт к карточке с этим правилом.
+export type GrammarText = { speaker?: string; text: string }[];
+
+export const GRAMMAR_TEXTS: Record<string, GrammarText> = {
+  s2: [
+    {
+      speaker: "Radio announcer",
+      text: "Last month, the renowned and much-loved singer Lena Horne died in New York, [[reduced-relatives|aged 92]]. This Afro-American singer and civil activist worked in America in the Golden era of stage and screen, meeting [[such-as-comment|such great names as]] Billie Holiday and Duke Ellington. We have with us here in the studio Joel Lightwater to tell us more about Lena Horne's remarkable life.",
+    },
+    {
+      speaker: "Joel Lightwater",
+      text: "Thank you, John. Lena Horne was born in 1917 to a Brooklyn family, [[reduced-relatives|described by a prominent writer]] as the 'Talented Tenth' – a name which was given to those members of the African American community who were educated and socially prominent. Her family were activists in African-American rights – her grandmother, Cora Calhoun, was in fact the founding member of the N.A.A.C.P., that is, the National Association for the Advancement of Coloured People. Indeed, at the age of two, Lena was photographed parading in a protest.",
+    },
+    {
+      text: "Her childhood was split between her grandparents' town house in Brooklyn, and her mother's lodgings in Harlem, [[having-left|her father having left the family]] when Lena was only three years old. She went to school at Brooklyn Girls High, but when she started singing at the famous Cotton Club at the age of 16, she dropped out without a diploma.",
+    },
+    {
+      text: "All her life, Lena's mother Edna [[had-come-before|had hoped]] that Lena could use her performances to break down race barriers. This was not an easy thing to do in the race-conscious culture of the time. At one point Lena was advised to advertise her creamy complexion as Latin, [[such-as-comment|something she refused to do]]; while later in her career, studio executives in Hollywood [[subjunctive|suggested that she darken]] her skin colour with make-up.",
+    },
+    {
+      text: "[[reduced-relatives|Matters relating to]] racial equality were always high up on Lena's priorities. During World War II, when she was entertaining soldiers and prisoners of war, she noticed that [[was-being-asked|she was always being asked]] to perform for groups which segregated in terms of colour. [[reduced-relatives|In the rare instances where]] she sang for mixed groups, white German prisoners of war were seated in front of the African American servicemen. She soon refused to perform for such occasions, and, [[since-present-perfect|since]] the US Army refused to allow integrated audiences, she put on her own show for a mixed-colour audience.",
+    },
+    {
+      text: "After the war years, Lena had the opportunity to move into the glamorous world of Hollywood, and she was [[to-be-signed|the first African American to be signed]] on a long-term studio contract. However, this was an age when the colour barrier was still strong. Black actors rarely had the chance to play anything more than maids and butlers. Although Lena was beginning to achieve a high level of notoriety, she found that she rarely had the chance to act, and many of her lines were cut during the editing process. [[inversion-only|Only in two incidences did she play]] a character that was central to the plot.",
+    },
+    {
+      text: "But Lena's elegance and powerful voice were [[had-come-before|unlike anything that had come before]], and both the public and the executives in the entertainment industry began to take note. [[by-mid-40s|By the mid-'40s]], Horne was the highest paid black actor in the country, and her songs were instant classics.",
+    },
+    {
+      text: "However, Horne's great fame [[prevent-from|could not prevent the wheels of the anti-Communist machine from bearing down on her]]. During the 1950s, she was marked as a Communist sympathiser as a result of her civil rights activism. She soon [[prevent-from|found herself blacklisted]] and unable to work on television or in the movies. At this time, however, she continued to sing in nightclubs, and made some of her best recordings. In the 60s, she was once again back in the public eye.",
+    },
+    {
+      text: "[[since-present-perfect|Since the 16-year-old danced]] her first steps on the stage of the Cotton Club, [[since-present-perfect|much has changed]]. Thanks to her continued musical, theatrical and political efforts, she paved the way for many other non-whites in the entertainment industry. But [[what-clause|what she will be remembered for most of all must be]] her ability to move generations of audiences with her shimmering resonant voice, singing the classic greats, like \"Black Coffee\" and the unforgettable \"Stormy Weather.\"",
+    },
+  ],
+};
+
 export const GRAMMAR: Record<string, GrammarPoint[]> = {
   s2: [
     {
