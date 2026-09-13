@@ -175,9 +175,9 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
       title_en: "Inversion after Only + adverbial: Only in two instances did she play",
       quote: "**Only in two incidences did she play** a character that was central to the plot.",
       rule:
-        "Если предложение начинается с ограничительного или отрицательного обстоятельства (Only in…, Only then, Only after, Never, Rarely, Seldom, Not until, No sooner, Under no circumstances, Little), вспомогательный глагол встаёт ПЕРЕД подлежащим, как в вопросе: did she play, а не she played. В Past Simple вспомогательного нет — появляется did + базовая форма. Это эмфаза, формальная речь и письмо.",
+        "Если предложение начинается с ограничительного или отрицательного обстоятельства (Only in…, Only then, Only after, Never, Rarely, Seldom, Not until, No sooner, Under no circumstances, Little — как в Little did she know), вспомогательный глагол встаёт ПЕРЕД подлежащим, как в вопросе: did she play, а не she played. В Past Simple вспомогательного нет — появляется did + базовая форма. Это эмфаза, формальная речь и письмо.",
       rule_en:
-        "When a sentence opens with a restrictive or negative adverbial (Only in…, Only then, Only after, Never, Rarely, Seldom, Not until, No sooner, Under no circumstances, Little), the auxiliary goes BEFORE the subject, as in a question: did she play, not she played. Past Simple has no auxiliary, so did + base form appears. It's emphatic, formal speech and writing.",
+        "When a sentence opens with a restrictive or negative adverbial (Only in…, Only then, Only after, Never, Rarely, Seldom, Not until, No sooner, Under no circumstances, Little — as in Little did she know), the auxiliary goes BEFORE the subject, as in a question: did she play, not she played. Past Simple has no auxiliary, so did + base form appears. It's emphatic, formal speech and writing.",
       pattern: "Only + adverbial / Never / Rarely / Not until X + AUX + subject + verb",
       examples: [
         "Only after the war did she return to the stage.",
@@ -282,13 +282,13 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
       quote:
         "a Brooklyn family, **described by a prominent writer** as the 'Talented Tenth' / **Matters relating to** racial equality were always high up on Lena's priorities / Lena Horne died in New York, **aged 92**.",
       rule:
-        "who / which + be выбрасывают, остаётся причастие: (which was) described → described; (which relate) → relating; (who was) aged 92 → aged 92. V3 — пассив (над существительным что-то сделали), V-ing — актив (оно само делает). Именно эта плотность и делает текст «C1»: в каждом предложении по 2–3 свёрнутых придаточных.",
+        "Придаточное who / which … сворачивают в причастие. Пассив: who / which + be выбрасывают, остаётся V3: (which was) described → described; (who was) aged 92 → aged 92. Актив: which выбрасывают, а глагол превращают в V-ing: (which relate) → relating. Итого: V3 — над существительным что-то сделали, V-ing — оно само делает. Именно эта плотность и делает текст «C1»: в каждом предложении по 2–3 свёрнутых придаточных.",
       rule_en:
-        "who / which + be is dropped, leaving the participle: (which was) described → described; (which relate) → relating; (who was) aged 92 → aged 92. V3 = passive (something was done to the noun), V-ing = active (the noun does it). This density is exactly what makes the text 'C1': two or three folded clauses per sentence.",
+        "The who / which clause is folded into a participle. Passive: who / which + be is dropped, leaving V3: (which was) described → described; (who was) aged 92 → aged 92. Active: which is dropped and the verb turns into V-ing: (which relate) → relating. So: V3 = something was done to the noun, V-ing = the noun does it. This density is exactly what makes the text 'C1': two or three folded clauses per sentence.",
       pattern: "noun + V3 … (passive)   |   noun + V-ing … (active)",
       examples: [
         "The people (who were) invited to the party all came.",
-        "Students (who are) wishing to apply should write to the office.",
+        "Students wishing to apply should write to the office.  (= who wish to apply)",
         "The singer, (who was) born in 1917, died aged 92.",
       ],
       it: [
@@ -402,9 +402,9 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "What I'm looking for in a new job is a strong engineering culture.",
       ],
       trap:
-        "That she will be remembered for… ✗ — that не значит «то, что». Не переводи must как «должна»: с be + существительное это почти всегда вывод (This must be the place). Вынести предлог вперёд (for what she will be remembered) — грамматично, но звучит неестественно.",
+        "That she will be remembered for… ✗ — that вводит целый факт (That she left surprised me = то, что она ушла), а «то, за что / та вещь, которую» передаёт только what. Не переводи must как «должна»: с be + существительное это почти всегда вывод (This must be the place). Вынести предлог вперёд (for what she will be remembered) — грамматично, но звучит неестественно.",
       trap_en:
-        "That she will be remembered for… ✗ — that can't mean 'the thing that'. Don't read must as obligation: with be + noun it is almost always deduction (This must be the place). Fronting the preposition (for what she will be remembered) is grammatical but sounds unnatural.",
+        "That she will be remembered for… ✗ — that introduces a whole fact (That she left surprised me), while 'the thing that' is only what. Don't read must as obligation: with be + noun it is almost always deduction (This must be the place). Fronting the preposition (for what she will be remembered) is grammatical but sounds unnatural.",
       task: {
         q: "Начни с What: She was admired most of all for her honesty.",
         q_en: "Start with What: She was admired most of all for her honesty.",
