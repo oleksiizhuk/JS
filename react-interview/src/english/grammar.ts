@@ -13,6 +13,8 @@ export type GrammarPoint = {
   rule_en: string;
   pattern: string;
   examples: string[];
+  it: string[]; // примеры из IT / рабочего контекста
+  me: string[]; // примеры «о себе» для собеседования
   trap: string;
   trap_en: string;
   task: { q: string; q_en: string; a: string; note?: string; note_en?: string };
@@ -74,6 +76,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "The meeting having ended early, everyone left.",
         "Having finished the report, she went home.  (no own subject → she both finished and went)",
       ],
+      it: [
+        "The API having changed in v3, we had to rewrite the client.",
+        "The tests having passed, the pipeline deployed the build automatically.",
+      ],
+      me: [
+        "My contract having ended in May, I started looking for a new role.",
+        "Having spent five years in React, I moved on to React Native.",
+      ],
       trap:
         "Без своего подлежащего причастие относится к подлежащему главной части. «Having left the family, her childhood was split…» — ошибка: получается, что семью бросило детство (dangling participle). Либо добавь подлежащее (her father having left), либо перестрой предложение.",
       trap_en:
@@ -101,6 +111,15 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "He was the last to leave.",
         "There are three forms to be filled in.  (= that must be filled in)",
         "This is the only file to be updated automatically.",
+      ],
+      it: [
+        "This was the first service to be migrated to TypeScript.",
+        "There are still two PRs to be reviewed before the release.",
+        "The only test to be skipped is the flaky one.",
+      ],
+      me: [
+        "I was the first developer to be hired on that team.",
+        "I was the only candidate to be invited to the final round.",
       ],
       trap:
         "«the first African American who was signed» — грамматично, но тяжело; на C1 ждут инфинитив. Выбирай залог по смыслу: the first person to walk on the Moon (сам шёл) vs the first film to be shot in colour (фильм снимали). И не путай с инфинитивом цели: I went there to be seen — «чтобы меня увидели».",
@@ -130,6 +149,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "She recognised the man who had helped her years before.",
         "We had hoped to finish by Friday, but the client changed the brief.  (unfulfilled hope)",
       ],
+      it: [
+        "The new architecture was unlike anything the team had built before.",
+        "We had hoped to ship by Friday, but a blocker came up.",
+      ],
+      me: [
+        "By the time I joined, the codebase had already grown to 200k lines.",
+        "I had hoped to become a team lead earlier, but the company froze promotions.",
+      ],
       trap:
         "Не ставь Past Perfect везде: если порядок ясен из after/before между двумя действиями, Past Simple допустим (After she left, he called). Но anything / nothing / ever … before + точка в прошлом — только had + V3.",
       trap_en:
@@ -157,6 +184,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "Not until 1960 was she allowed back on TV.",
         "Rarely have I seen such talent.",
         "Never did he admit the mistake.",
+      ],
+      it: [
+        "Only after we added caching did the response time drop below 100 ms.",
+        "Not until the logs were enabled did we find the memory leak.",
+      ],
+      me: [
+        "Only when I started mentoring juniors did I realise how much I knew.",
+        "Never have I worked on a project without automated tests.",
       ],
       trap:
         "Only + подлежащее — без инверсии: Only Lena played the lead (only относится к Lena). Инверсия только когда only стоит перед обстоятельством (времени, места, условия). И после did — базовая форма: did she play, не did she played. Кстати, в тексте incidences — редкое слово; обычно говорят instances.",
@@ -186,6 +221,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "I suggest (that) we leave early.",
         "It is essential that every applicant submit two references.",
       ],
+      it: [
+        "The reviewer suggested that we extract the hook into a separate file.",
+        "The client insisted that the app be released before Black Friday.",
+      ],
+      me: [
+        "My manager recommended that I take the AWS certification.",
+        "I suggested that we switch to TypeScript, and the team agreed.",
+      ],
       trap:
         "«suggested her to darken» — самая частая ошибка: suggest НЕ берёт object + to. Варианты: suggest doing / suggest that sb (should) do. В пассиве видно особенно хорошо: that the contract be signed, а не is signed.",
       trap_en:
@@ -214,6 +257,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "He's always being told what to do.",
         "I was constantly being interrupted during the talk.",
       ],
+      it: [
+        "While the feature was being tested, the API was constantly being changed.",
+        "The build was being deployed when the outage started.",
+      ],
+      me: [
+        "In my last job I was constantly being pulled into meetings.",
+        "I was being interviewed by three people at once.",
+      ],
       trap:
         "B2 тянет к «she was always asked» — это тоже верно, но нейтрально: факт без процесса и эмоции. being добавляет повторяемость и раздражение. Не путай being asked (Continuous) с been asked (Perfect: has been asked).",
       trap_en:
@@ -240,6 +291,15 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "Students (who are) wishing to apply should write to the office.",
         "The singer, (who was) born in 1917, died aged 92.",
       ],
+      it: [
+        "Components rendered on the server can't use browser APIs.",
+        "Any request exceeding 5 seconds is cancelled.",
+        "The bug, reported last week, is fixed in 2.3.1.",
+      ],
+      me: [
+        "I'm a frontend developer based in Kyiv, working mainly with React Native.",
+        "Most of the apps built by our team are e-commerce.",
+      ],
       trap:
         "Направление причастия: the letter sending ✗ → the letter sent (письмо отправили). aged 92 — прилагательное, не глагол: at aged 92 ✗ → at the age of 92 или просто aged 92. Ещё из текста: in the rare instances where she sang — после instances / cases / situations ставят where, не when.",
       trap_en:
@@ -264,6 +324,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "Since she left, the office has been quiet.",
         "Much has happened since we last met.",
         "a five-year-old boy / a ten-minute break  (no -s)",
+      ],
+      it: [
+        "Since we migrated to TypeScript, the number of runtime errors has dropped by half.",
+        "A lot has changed in React since hooks arrived.",
+      ],
+      me: [
+        "Since I joined the company, I've shipped three mobile apps.",
+        "I've been doing frontend since 2018.  (a period up to now → have been + -ing)",
       ],
       trap:
         "Since she has left… ✗ — в since-части Past Simple. 16-years-old girl ✗ — без -s. Much has changed — much с неисчисляемым «многое»; в утверждениях much звучит книжно, в речи — a lot has changed.",
@@ -291,6 +359,15 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "The noise kept me from sleeping.",
         "After the merger she found herself reporting to a former colleague.",
       ],
+      it: [
+        "Type checking prevents a lot of bugs from reaching production.",
+        "Rate limiting stops one client from overloading the API.",
+        "After the merger we found ourselves maintaining two codebases.",
+      ],
+      me: [
+        "A tight deadline didn't prevent me from writing tests.",
+        "I found myself leading the project after the team lead left.",
+      ],
       trap:
         "prevent him to leave ✗, prevent that he leaves ✗. У avoid другая схема — без from: avoid doing. Разница: prevent — не дать случиться, avoid — самому уклониться.",
       trap_en:
@@ -315,6 +392,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "What I like most about the job is the people.",
         "What she was famous for was her voice.",
         "What matters most must be the result, not the process.",
+      ],
+      it: [
+        "What makes React Native attractive is one codebase for two platforms.",
+        "What the app was criticised for was slow startup.",
+      ],
+      me: [
+        "What I'm best at is turning vague requirements into a clear plan.",
+        "What I'm looking for in a new job is a strong engineering culture.",
       ],
       trap:
         "That she will be remembered for… ✗ — that не значит «то, что». Не переводи must как «должна»: с be + существительное это почти всегда вывод (This must be the place). Вынести предлог вперёд (for what she will be remembered) — грамматично, но звучит неестественно.",
@@ -342,6 +427,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "They cancelled the show, something the fans never forgave.",
         "She was offered a raise, an offer she accepted at once.",
       ],
+      it: [
+        "We rely on such tools as ESLint, Prettier and Vitest.",
+        "The library dropped support for Node 16, something many teams weren't ready for.",
+      ],
+      me: [
+        "I've worked with such frameworks as React, Next.js and Expo.",
+        "I was offered a lead role, something I hadn't planned for.",
+      ],
       trap:
         "such as great names ✗ — порядок such + noun + as. something what she refused ✗ — what здесь невозможен. И запятая перед something обязательна: это приложение, а не продолжение фразы.",
       trap_en:
@@ -366,6 +459,14 @@ export const GRAMMAR: Record<string, GrammarPoint[]> = {
         "By 1950 she had made three films.",
         "By then, he was a star.",
         "By the time we arrived, the show had started.",
+      ],
+      it: [
+        "By the end of the sprint, we had closed forty tickets.",
+        "By 2024 most of our services were running on Kubernetes.",
+      ],
+      me: [
+        "By the time I turned 30, I had worked in three countries.",
+        "By next year I'll have finished my English course.  (future: will have + V3)",
       ],
       trap:
         "by ≠ until: by Friday — не позже пятницы (дедлайн), until Friday — вплоть до пятницы (длительность). Десятилетия: in the 1940s / the '40s — без апострофа перед s; 1940's ✗ (частая ошибка даже у носителей).",

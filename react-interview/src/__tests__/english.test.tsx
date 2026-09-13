@@ -60,6 +60,8 @@ describe("english/grammar.ts", () => {
     for (const f of TEXT) expect(String(p[f]).trim().length, f).toBeGreaterThan(0);
     expect(p.quote, "quote без **выделения**").toMatch(/\*\*.+?\*\*/);
     expect(p.examples.length).toBeGreaterThanOrEqual(2);
+    expect(p.it.length, "it").toBeGreaterThanOrEqual(2);
+    expect(p.me.length, "me").toBeGreaterThanOrEqual(2);
     for (const f of ["q", "q_en", "a"] as const) expect(p.task[f].trim().length, "task." + f).toBeGreaterThan(0);
     if (p.task.note) expect(p.task.note_en, "task.note без note_en").toBeTruthy();
   });

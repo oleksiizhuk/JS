@@ -26,6 +26,7 @@ type UiText = {
   right: string; wrong: string; gapDone: string; reset: string; resetConfirm: string; boxes: string;
   grammarIntro: string; grammarNone: string; grammarRu: string; rule: string; pattern: string; trap: string; tryIt: string;
   sourceText: string; textHint: string; hideText: string; showText: string; inText: string;
+  inIt: string; aboutMe: string;
 };
 
 const UI: Record<Lang, UiText> = {
@@ -47,6 +48,7 @@ const UI: Record<Lang, UiText> = {
     grammarNone: "Для выбранных разделов разбора грамматики пока нет (есть для Section 2).",
     grammarRu: "🇷🇺 Дублировать по-русски", rule: "Правило", pattern: "Формула", trap: "Ловушка", tryIt: "Попробуй",
     sourceText: "Текст", textHint: "Кликни подсвеченную фразу — перейдёшь к её правилу.", hideText: "Свернуть текст", showText: "Показать текст", inText: "↑ в тексте",
+    inIt: "В IT", aboutMe: "О себе на собесе",
   },
   en: {
     units: "Sections", modes: { text: "📖 Text", words: "🃏 Words", srs: "🔁 Review", gaps: "✍️ Gaps", grammar: "📐 Grammar" },
@@ -66,6 +68,7 @@ const UI: Record<Lang, UiText> = {
     grammarNone: "No grammar notes for the selected sections yet (available for Section 2).",
     grammarRu: "🇷🇺 Also in Russian", rule: "Rule", pattern: "Pattern", trap: "Trap", tryIt: "Try it",
     sourceText: "Source text", textHint: "Click a highlighted phrase to jump to its rule.", hideText: "Hide text", showText: "Show text", inText: "↑ in the text",
+    inIt: "In IT", aboutMe: "About yourself (interview)",
   },
 };
 
@@ -428,6 +431,10 @@ function GrammarMode({ units }: { units: Unit[] }) {
             <p className="en-pattern">{p.pattern}</p>
             <div className="en-label">{T.examples}</div>
             <ul className="en-ex">{p.examples.map((e) => <li key={e}>{e}</li>)}</ul>
+            <div className="en-label">💻 {T.inIt}</div>
+            <ul className="en-ex">{p.it.map((e) => <li key={e}>{e}</li>)}</ul>
+            <div className="en-label">🙋 {T.aboutMe}</div>
+            <ul className="en-ex">{p.me.map((e) => <li key={e}>{e}</li>)}</ul>
             <div className="redflag">
               <b>{T.trap}:</b> {en ? p.trap_en : p.trap}
               {dupRu && <div className="hint">🇷🇺 {p.trap}</div>}
