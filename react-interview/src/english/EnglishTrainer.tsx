@@ -394,11 +394,16 @@ function GrammarMode({ units }: { units: Unit[] }) {
   const en = lang === "en";
   const dupRu = en && ru;
   const reveal = (id: string) => setRevealed((s) => new Set(s).add(id));
+  // scrollIntoView опционально: в jsdom (тесты) его нет
+  const scrollTo = (elId: string) => {
+    const el = document.getElementById(elId);
+    if (el && typeof el.scrollIntoView === "function") el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const jump = (id: string) => {
     setFocus(id);
-    document.getElementById("gr-" + id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollTo("gr-" + id);
   };
-  const backToText = () => document.getElementById("gr-text")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const backToText = () => scrollTo("gr-text");
   return (
     <>
       <div className="card">
