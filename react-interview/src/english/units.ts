@@ -50,7 +50,7 @@ export const UNITS: Unit[] = [
         ex: ["a renowned soprano", "The region is renowned for its wine."],
         use: "Всегда с чем-то положительным: renowned FOR (за что) / renowned AS (в качестве кого). Звучит книжно — в живой речи скажут famous. Ловушка: notorious — тоже «известный», но дурной славой.",
         use_en: "Always positive: renowned FOR something / renowned AS someone. Bookish — in speech people say famous. Trap: notorious also means «well-known», but for something bad.",
-        gap: { s: "The city is ___ for its Gothic architecture.", a: "renowned" },
+        gap: { s: "He is a ___ expert on Baroque music.", a: "renowned" },
       },
       {
         k: "prominent", w: "prominent", form: "adjective", ipa: "/ˈprɒmɪnənt/",
@@ -110,7 +110,7 @@ export const UNITS: Unit[] = [
         ex: ["She spent the war entertaining the troops.", "We're entertaining friends on Saturday."],
         use: "Past continuous (was entertaining) — фон, на котором случилось главное событие. Prisoners of war (POWs) — военнопленные. Ловушка: entertain an idea / a proposal — формальное «рассматривать, допускать», не «развлекать».",
         use_en: "Past continuous (was entertaining) sets the background against which the main event happens. Prisoners of war (POWs). Trap: entertain an idea / a proposal is formal for «consider», nothing to do with amusement.",
-        gap: { s: "During the war she toured Europe, ___ the troops.", a: "entertaining" },
+        gap: { s: "The band spent the summer ___ holidaymakers on the coast.", a: "entertaining" },
       },
       {
         k: "In the rare instances", w: "in the rare instances (when)", form: "noun phrase", ipa: "/ˈɪnstənsɪz/",
@@ -120,7 +120,7 @@ export const UNITS: Unit[] = [
         ex: ["In the rare instances when she performed at home, the hall was packed.", "In this instance, the rule does not apply."],
         use: "instance = конкретный случай/пример явления (for instance — например; in this instance — в данном случае). Ловушка: occasion — событие/момент («по такому случаю»), case — ситуация/дело; instance — один из повторяющихся примеров. Предлоги: IN the rare instances, но ON rare occasions.",
         use_en: "instance = a particular example of something happening (for instance; in this instance). Trap: occasion is an event or moment, case is a situation; instance is one example among repeated ones. Prepositions: IN the rare instances, but ON rare occasions.",
-        gap: { s: "In the rare ___ when she was allowed on stage, the hall was full.", a: "instances" },
+        gap: { s: "In a handful of ___, the drug caused side effects.", a: "instances" },
       },
       {
         k: "for such occasions", w: "occasion", form: "noun", ipa: "/əˈkeɪʒən/",
@@ -130,7 +130,7 @@ export const UNITS: Unit[] = [
         ex: ["She kept one gown for such occasions.", "a dress for a special occasion; rise to the occasion"],
         use: "on this occasion — в этот раз; on occasion — иногда; dress for the occasion; rise to the occasion — оказаться на высоте. Ловушка №1 русскоязычных: occasion ≠ «возможность» — I had an occasion to… ✗ → I had an opportunity / a chance to….",
         use_en: "on this occasion; on occasion (= sometimes); dress for the occasion; rise to the occasion. Trap for Russian speakers: occasion is NOT «opportunity» — I had an occasion to… ✗ → I had a chance to….",
-        gap: { s: "She kept one white gown for such ___.", a: "occasions" },
+        gap: { s: "He only wears a tie on special ___.", a: "occasions" },
       },
       {
         k: "segregated in terms of colour", w: "segregated / in terms of", form: "adjective + preposition phrase", ipa: "/ˈseɡrɪɡeɪtɪd/",
@@ -140,7 +140,7 @@ export const UNITS: Unit[] = [
         ex: ["Audiences were segregated: Black listeners sat at the back.", "In terms of cost, the plan is fine; in terms of time, it isn't."],
         use: "segregate / segregation — про разделение групп людей (расовое, гендерное), не про «отделить файлы». in terms of — канцелярская связка, по возможности заменять: as regards, when it comes to. colour — британское написание (AmE color).",
         use_en: "segregate / segregation is about separating groups of people (by race, gender), not files. in terms of is bureaucratic filler — prefer when it comes to. colour is the British spelling (AmE color).",
-        gap: { s: "Audiences were ___ : Black listeners had to sit at the back.", a: "segregated" },
+        gap: { s: "For decades the town's schools remained ___ by race.", a: "segregated" },
       },
       {
         k: "high level of notoriety", w: "notoriety", form: "noun", ipa: "/ˌnəʊtəˈraɪəti/",
@@ -150,7 +150,7 @@ export const UNITS: Unit[] = [
         ex: ["The club gained notoriety for its wild late-night shows.", "a notorious criminal"],
         use: "Почти всегда негативно или скандально: gain / achieve notoriety FOR. Прилагательное notorious — печально известный. Ловушка: использовать как красивый синоним fame — ошибка; о хорошем говорят fame, renown, recognition.",
         use_en: "Nearly always negative or scandalous: gain / achieve notoriety FOR. Adjective: notorious. Trap: using it as a fancy synonym of fame — for good things say fame, renown, recognition.",
-        gap: { s: "The nightclub gained ___ for its wild late-night shows.", a: "notoriety" },
+        gap: { s: "The hacker achieved a certain ___ after the bank leak.", a: "notoriety" },
       },
       {
         k: "powerful voice was unlike anything that had come before", w: "unlike anything that had come before", form: "idiomatic phrase", ipa: "",
@@ -160,7 +160,7 @@ export const UNITS: Unit[] = [
         ex: ["The album was unlike anything that had come before.", "a style like nothing before it"],
         use: "Формула для описания новизны: unlike + существительное (unlike anything / anyone). Past perfect had come before — «всё, что было ДО того момента». Ловушка: unlike — предлог, без than: unlike than ✗.",
         use_en: "A set formula for novelty: unlike + noun (unlike anything / anyone). Past perfect had come before = everything up to that moment. Trap: unlike is a preposition — no than after it.",
-        gap: { s: "Her debut album was ___ anything that had come before.", a: "unlike" },
+        gap: { s: "The new phone looks ___ anything else on the market.", a: "unlike" },
       },
       {
         k: "She paved the way", w: "pave the way (for)", form: "idiom", ipa: "/peɪv/",
@@ -170,7 +170,7 @@ export const UNITS: Unit[] = [
         ex: ["Her victory paved the way for other women in the sport.", "The talks paved the way for a peace deal."],
         use: "pave the way FOR (не to). Буквально pave — мостить (paved road, pavement — тротуар BrE). Близкие: open the door for, set the stage for, be a trailblazer.",
         use_en: "pave the way FOR (not to). Literally, pave = cover with stones (paved road; pavement = BrE sidewalk). Related: open the door for, set the stage for, be a trailblazer.",
-        gap: { s: "Her victory ___ the way for other women in the sport.", a: "paved" },
+        gap: { s: "Her research ___ the way for modern vaccines.", a: "paved" },
       },
     ],
   },
@@ -191,7 +191,7 @@ export const UNITS: Unit[] = [
         ex: ["I'm backstage at the arena, waiting for the band.", "a backstage pass; go backstage after the show"],
         use: "Буквальное место: backstage at + площадка. Ловушка: переносное «за кулисами» (закрытая часть процесса) — behind the scenes: behind-the-scenes negotiations.",
         use_en: "A literal place: backstage at + venue. Trap: the figurative «behind the curtain» of a process is behind the scenes: behind-the-scenes negotiations.",
-        gap: { s: "The presenter is ___ at the arena, waiting for the band to arrive.", a: "backstage" },
+        gap: { s: "Only crew with a pass are allowed ___ during the show.", a: "backstage" },
       },
       {
         k: "It certainly has", w: "It certainly has.", form: "grammar: echo answer", ipa: "",
@@ -211,7 +211,7 @@ export const UNITS: Unit[] = [
         ex: ["The stewards struggled to control the rowdiness of the crowd.", "There was some rowdiness after the match."],
         use: "Про группу, которая шумит и слегка агрессивна: болельщики, паб в пятницу, класс без учителя. Ловушка: просто громко — loud / noisy; rowdy добавляет «буйно, на грани хулиганства».",
         use_en: "About a group that is noisy and a bit aggressive: fans, a pub on Friday, a class with no teacher. Trap: merely loud is loud / noisy; rowdy adds «unruly, close to trouble».",
-        gap: { s: "The stewards struggled to control the ___ of the crowd.", a: "rowdiness" },
+        gap: { s: "Extra police were hired because of the ___ at last year's festival.", a: "rowdiness" },
       },
       {
         k: "How do you cope with that?", w: "cope with", form: "verb + preposition", ipa: "/kəʊp/",
@@ -221,7 +221,7 @@ export const UNITS: Unit[] = [
         ex: ["How do you cope with hecklers?", "She's coping well with the pressure."],
         use: "cope WITH, и никогда cope up with (частая ошибка). cope — про то, чтобы выдержать трудное (стресс, потеря, нагрузка); deal with / handle — шире, про любые дела. Без дополнения тоже можно: I can't cope.",
         use_en: "cope WITH — never cope up with. cope is about enduring something hard (stress, loss, workload); deal with / handle are broader. Also used alone: I can't cope.",
-        gap: { s: "How do you ___ with hecklers in the front row?", a: "cope" },
+        gap: { s: "I don't know how nurses ___ with twelve-hour shifts.", a: "cope" },
       },
       {
         k: "You never know what they’re going to come up with", w: "come up with", form: "phrasal verb", ipa: "",
@@ -231,7 +231,7 @@ export const UNITS: Unit[] = [
         ex: ["Kids always come up with the strangest questions.", "We need to come up with a name by Friday."],
         use: "Неотделяемый: come up with an idea, не come an idea up. Ловушка: come up (возникнуть, всплыть: something came up) и come across (наткнуться) — другие глаголы.",
         use_en: "Inseparable: come up with an idea, never come an idea up. Trap: come up (arise: something came up) and come across (find by chance) are different verbs.",
-        gap: { s: "Kids always ___ up with the strangest questions.", a: "come" },
+        gap: { s: "Where did you ___ up with such a clever excuse?", a: "come" },
       },
       {
         k: "But I’m up for that.", w: "be up for (something)", form: "idiom · spoken", ipa: "",
@@ -241,7 +241,7 @@ export const UNITS: Unit[] = [
         ex: ["Karaoke tonight? — Sure, I'm up for that.", "Anyone up for a walk?"],
         use: "Приглашение и согласие: up for a drink / a challenge / anything. Ловушка: be up TO — либо «замышлять» (What are you up to?), либо «быть в силах» (I'm not up to it today). Одна буква — другой смысл.",
         use_en: "Invitations and agreement: up for a drink / a challenge / anything. Trap: be up TO means either «doing something sneaky» (What are you up to?) or «capable of» (I'm not up to it today).",
-        gap: { s: "Karaoke after the show? — Sure, I'm ___ for that.", a: "up" },
+        gap: { s: "We're going hiking on Sunday if you're ___ for it.", a: "up" },
       },
       {
         k: "rowdy kid", w: "rowdy", form: "adjective", ipa: "/ˈraʊdi/",
@@ -251,7 +251,7 @@ export const UNITS: Unit[] = [
         ex: ["A rowdy kid in the front row kept shouting.", "a rowdy crowd / pub / party"],
         use: "Про людей и компании, не про машины или музыку. Сравни: naughty kid — непослушный (мягче); disruptive — срывающий занятие (учительское слово).",
         use_en: "About people and groups, not machines or music. Compare: a naughty kid is misbehaving (milder); disruptive is the teacher's word for spoiling a lesson.",
-        gap: { s: "A ___ kid in the front row kept shouting over the jokes.", a: "rowdy" },
+        gap: { s: "The pub gets ___ after the football on Saturdays.", a: "rowdy" },
       },
       {
         k: "We bring the parent up", w: "bring somebody up (on stage)", form: "phrasal verb", ipa: "",
@@ -261,7 +261,7 @@ export const UNITS: Unit[] = [
         ex: ["If a child misbehaves, we bring the parent up on stage.", "I was brought up in Leeds. / Don't bring up the divorce at dinner."],
         use: "Три значения одного глагола, контекст решает: bring the parent up (на сцену), be brought up (быть воспитанным), bring up a subject (поднять тему). Отделяемый: bring him up / bring up the parent.",
         use_en: "Three meanings, context decides: bring the parent up (onto the stage), be brought up (raised), bring up a subject (mention it). Separable: bring him up / bring up the parent.",
-        gap: { s: "If a child misbehaves, we ___ the parent up on stage.", a: "bring" },
+        gap: { s: "The host will ___ a volunteer up from the audience for the next trick.", a: "bring" },
       },
       {
         k: "onus", w: "the onus (is on somebody)", form: "noun · singular only", ipa: "/ˈəʊnəs/",
@@ -271,7 +271,7 @@ export const UNITS: Unit[] = [
         ex: ["The onus is on the performer to keep the audience on side.", "The onus of proof lies with the prosecution."],
         use: "Всегда the onus, всегда единственное число: the onus is ON somebody TO do something. Юридически-формальное слово, в разговоре добавляет веса. Ловушка: onus of — редко и только в юр. штампах (onus of proof).",
         use_en: "Always the onus, always singular: the onus is ON somebody TO do something. Legal-formal, adds weight in speech. Trap: onus of appears only in fixed legal phrases (onus of proof).",
-        gap: { s: "The ___ is on the performer to keep the audience on side.", a: "onus" },
+        gap: { s: "If the parcel is lost, the ___ is on the seller to prove it was sent.", a: "onus" },
       },
       {
         k: "Can’t diverge from the script", w: "diverge from", form: "verb + preposition", ipa: "/daɪˈvɜːdʒ/",
@@ -281,7 +281,7 @@ export const UNITS: Unit[] = [
         ex: ["In a scripted show you can't diverge from the text.", "Our opinions diverge on this point."],
         use: "diverge FROM. Ловушка: digress — отклоняться от темы в речи (But I digress); deviate from — отклониться от нормы/маршрута (ближайший синоним). Существительное — divergence.",
         use_en: "diverge FROM. Trap: digress is going off-topic while speaking (But I digress); deviate from is the closest synonym (from a norm or route). Noun: divergence.",
-        gap: { s: "In a scripted show you can't ___ from the text for long.", a: "diverge" },
+        gap: { s: "The film's plot begins to ___ from the novel halfway through.", a: "diverge" },
       },
       {
         k: "very lucrative", w: "lucrative", form: "adjective", ipa: "/ˈluːkrətɪv/",
@@ -291,7 +291,7 @@ export const UNITS: Unit[] = [
         ex: ["Corporate gigs are dull but very lucrative.", "a lucrative contract / market / career"],
         use: "Про деятельность и сделки, не про людей: a lucrative man ✗. Ловушка: profitable — бухгалтерское «в плюсе»; lucrative — «приносит большие деньги», часто с оттенком «ради денег, не ради души».",
         use_en: "About activities and deals, not people: a lucrative man ✗. Trap: profitable is the accountant's «in the black»; lucrative means «brings in big money», often hinting «for the money, not the love».",
-        gap: { s: "Corporate gigs are boring but very ___.", a: "lucrative" },
+        gap: { s: "Translating legal documents turned out to be surprisingly ___.", a: "lucrative" },
       },
       {
         k: "But what has also driven me is the fact that I was dyslexic", w: "what has driven me is…", form: "grammar: cleft sentence · drive somebody", ipa: "/dɪsˈleksɪk/",
@@ -301,7 +301,7 @@ export const UNITS: Unit[] = [
         ex: ["What has driven me all these years is the fear of an office job.", "She's a very driven person."],
         use: "Cleft-конструкция What… is… выносит причину в фокус: What matters is… / What drove me was…. driven (прилагательное) — целеустремлённый. Ловушка: What drives you? — «что тебя мотивирует», не «что ты водишь».",
         use_en: "The cleft What… is… puts the reason in focus: What matters is… / What drove me was…. driven (adjective) = highly motivated. Trap: What drives you? asks about motivation, not cars.",
-        gap: { s: "What has ___ me all these years is the fear of going back to an office job.", a: "driven" },
+        gap: { s: "He is ___ by a need to prove his old teachers wrong.", a: "driven" },
       },
       {
         k: "tough crowd", w: "tough crowd", form: "idiom", ipa: "/tʌf/",
@@ -311,7 +311,7 @@ export const UNITS: Unit[] = [
         ex: ["Nobody laughed at my joke in the meeting. Tough crowd.", "Teenagers are a tough crowd for a magician."],
         use: "Из стендапа, но живёт везде: сказать Tough crowd после шутки, которую не оценили коллеги, — самоирония. Ловушка: crowd здесь «публика», не «толпа на улице».",
         use_en: "From stand-up, but used everywhere: saying Tough crowd after a joke your colleagues ignored is self-mockery. Trap: crowd here means «audience», not a street crowd.",
-        gap: { s: "Nobody laughed at my joke in the meeting. ___ crowd.", a: "Tough" },
+        gap: { s: "___ crowd — not a single laugh in twenty minutes.", a: "Tough" },
       },
       {
         k: "Get boozed up", w: "get boozed up", form: "slang · phrasal", ipa: "/buːzd/",
@@ -321,7 +321,7 @@ export const UNITS: Unit[] = [
         ex: ["By ten the stag party had got well and truly boozed up.", "There's plenty of booze in the fridge."],
         use: "Только с друзьями или в шутку: booze (выпивка), boozer (паб или пьяница, BrE), a booze-up (попойка). Регистр по возрастанию: boozed up → drunk → intoxicated (полиция, отчёты).",
         use_en: "Only among friends or as a joke: booze (alcohol), boozer (a pub or a drinker, BrE), a booze-up (a drinking session). Register ladder: boozed up → drunk → intoxicated (police, reports).",
-        gap: { s: "By ten the stag party had got well and truly ___ up.", a: "boozed" },
+        gap: { s: "Half the wedding guests were ___ up before the speeches even started.", a: "boozed" },
       },
     ],
   },
@@ -342,7 +342,7 @@ export const UNITS: Unit[] = [
         ex: ["Six weeks of summer hols — I had no idea what to do with myself.", "What are you doing over the hols?"],
         use: "Британское: holiday = отпуск/каникулы (on holiday), в AmE это vacation, а holidays там — рождественские праздники. hols — детско-школьное сокращение, взрослые говорят с улыбкой.",
         use_en: "British: holiday = time off (on holiday); in AmE that is vacation, and the holidays means the Christmas season. hols is a schoolkid's clipping — adults use it with a smile.",
-        gap: { s: "Six weeks of summer ___ — I had no idea what to do with myself.", a: "hols" },
+        gap: { s: "The kids have three weeks of ___ left and are already bored.", a: "hols" },
       },
       {
         k: "Just pottering around", w: "potter around / about", form: "phrasal verb · BrE", ipa: "/ˈpɒtə/",
@@ -352,7 +352,7 @@ export const UNITS: Unit[] = [
         ex: ["Dad spent Sunday pottering around in the garden.", "I just pottered about the house all morning."],
         use: "Уютное слово про безделье без вины. AmE — putter around. Ловушка: не путать с potter (гончар) — Harry Potter ни при чём; и не mess around (валять дурака, с оттенком неодобрения).",
         use_en: "A cosy word for guilt-free idleness. AmE: putter around. Trap: nothing to do with a potter (who makes pots), and not mess around (fooling about, slightly disapproving).",
-        gap: { s: "Dad spent the whole Sunday ___ around in the garden.", a: "pottering" },
+        gap: { s: "Since retiring he's happiest ___ around the allotment.", a: "pottering" },
       },
       {
         k: "inevitably", w: "inevitably", form: "adverb", ipa: "/ɪnˈevɪtəbli/",
@@ -362,7 +362,7 @@ export const UNITS: Unit[] = [
         ex: ["We planned a barbecue and, inevitably, it poured with rain.", "Inevitably, the conversation turned to work."],
         use: "Часто с иронией вводит предсказуемо-нежелательный исход. Ставится в начале или между запятыми. Прилагательное inevitable: the inevitable happened.",
         use_en: "Often ironic, introducing a predictable, unwelcome outcome. Sentence-initial or between commas. Adjective: inevitable — the inevitable happened.",
-        gap: { s: "We planned a barbecue and, ___, it poured with rain.", a: "inevitably" },
+        gap: { s: "Cheap flights ___ mean long queues and tiny seats.", a: "inevitably" },
       },
       {
         k: "hung around", w: "hang around", form: "phrasal verb", ipa: "",
@@ -372,7 +372,7 @@ export const UNITS: Unit[] = [
         ex: ["We just hung around the shopping centre all afternoon.", "He hangs around with the wrong crowd."],
         use: "Ловушка из трёх hang: hang around (торчать без дела, чуть негативно), hang out (проводить время вместе, позитивно, AmE-оттенок), hang on (подожди). Past — hung (hanged — только о казни).",
         use_en: "Three hangs: hang around (loiter, slightly negative), hang out (spend time together, positive), hang on (wait). Past tense hung — hanged is only for executions.",
-        gap: { s: "We just ___ around the shopping centre all afternoon.", a: "hung" },
+        gap: { s: "After school we ___ around the skate park until dark.", a: "hung" },
       },
       {
         k: "tidying up", w: "tidy up", form: "phrasal verb · BrE", ipa: "/ˈtaɪdi/",
@@ -382,7 +382,7 @@ export const UNITS: Unit[] = [
         ex: ["Before Mum got home we spent an hour tidying up.", "Tidy your room up!"],
         use: "tidy — про порядок (разложить вещи), clean — про грязь (помыть). AmE чаще clean up / straighten up. Отделяемый: tidy up the room / tidy the room up.",
         use_en: "tidy is about order (putting things away), clean is about dirt. AmE prefers clean up / straighten up. Separable: tidy up the room / tidy the room up.",
-        gap: { s: "Before Mum got home we spent an hour ___ up.", a: "tidying" },
+        gap: { s: "I can't invite anyone over until I've finished ___ up.", a: "tidying" },
       },
       {
         k: "I was more shattered", w: "shattered", form: "adjective · BrE informal", ipa: "/ˈʃætəd/",
@@ -392,7 +392,7 @@ export const UNITS: Unit[] = [
         ex: ["After the night flight I was absolutely shattered.", "shattered glass; her dreams were shattered"],
         use: "Британское «я выжат»: I'm shattered / knackered. Ловушка: американец может понять shattered как «раздавлен горем»; в AmE говорят exhausted, beat, wiped out. Усилитель — absolutely, не very.",
         use_en: "British for «drained»: I'm shattered / knackered. Trap: to an American shattered may sound like «emotionally devastated»; AmE says exhausted, beat, wiped out. Intensifier: absolutely, not very.",
-        gap: { s: "After the overnight flight I was absolutely ___.", a: "shattered" },
+        gap: { s: "By the end of the double shift the nurses were completely ___.", a: "shattered" },
       },
       {
         k: "no lugging baggage", w: "lug (something)", form: "verb · informal", ipa: "/lʌɡ/",
@@ -402,7 +402,7 @@ export const UNITS: Unit[] = [
         ex: ["No lugging suitcases up five flights of stairs this year.", "I lugged the shopping home in the rain."],
         use: "carry — нейтрально нести; lug — тяжело и с раздражением. Существительное luggage / baggage — багаж (неисчисляемые: a piece of luggage). no + -ing в заголовках и заметках = «никакого …».",
         use_en: "carry is neutral; lug means heavy and annoying. Nouns luggage / baggage are uncountable (a piece of luggage). no + -ing in notes and headlines = «none of that».",
-        gap: { s: "No ___ suitcases up five flights of stairs this year.", a: "lugging" },
+        gap: { s: "I'm sick of ___ a heavy laptop around all day.", a: "lugging" },
       },
       {
         k: "Within three hours", w: "within (a period)", form: "preposition", ipa: "/wɪðˈɪn/",
@@ -412,7 +412,7 @@ export const UNITS: Unit[] = [
         ex: ["Within three hours we were on the beach.", "Reply within five working days. / within walking distance"],
         use: "Три предлога времени: within three hours (максимум за три часа), in three hours (ровно через три часа), for three hours (на протяжении трёх часов). within также про расстояние и границы: within budget, within reach.",
         use_en: "Three time prepositions: within three hours (three at most), in three hours (after exactly three), for three hours (duration). within also covers limits: within budget, within reach.",
-        gap: { s: "The taxi came, and ___ three hours we were on the beach.", a: "within" },
+        gap: { s: "The ambulance arrived ___ ten minutes of the call.", a: "within" },
       },
       {
         k: "at the crack of dawn", w: "at the crack of dawn", form: "idiom", ipa: "/kræk əv dɔːn/",
@@ -422,7 +422,7 @@ export const UNITS: Unit[] = [
         ex: ["We had to get up at the crack of dawn to catch the flight.", "The builders arrive at the crack of dawn."],
         use: "Разговорная идиома с оттенком жалобы. Формально — at first light / at daybreak. Противоположность — at dusk (в сумерках), in the dead of night (глубокой ночью).",
         use_en: "A conversational idiom with a hint of complaint. Formal: at first light / at daybreak. Opposites: at dusk, in the dead of night.",
-        gap: { s: "We had to get up at the ___ of dawn to catch the flight.", a: "crack" },
+        gap: { s: "Fishermen head out of the harbour at the ___ of dawn.", a: "crack" },
       },
       {
         k: "I’d never have made it otherwise", w: "make it / otherwise", form: "idiom + grammar: third conditional", ipa: "",
@@ -432,7 +432,7 @@ export const UNITS: Unit[] = [
         ex: ["Thanks for the lift — I'd never have made it otherwise.", "Hurry, or we won't make it."],
         use: "I'd = I would (не I had!) → would never have made — третий тип условного, условие спрятано в otherwise. make it — успеть/добраться/пробиться: make it to the meeting, make it big (стать звездой).",
         use_en: "I'd = I would (not I had!) → would never have made — a third conditional whose if-clause is hidden in otherwise. make it = arrive / succeed: make it to the meeting, make it big.",
-        gap: { s: "Thanks for the lift — I'd never have ___ it otherwise.", a: "made" },
+        gap: { s: "The train left at 9:02 — we only just ___ it.", a: "made" },
       },
       {
         k: "I was dreading", w: "dread (doing something)", form: "verb", ipa: "/dred/",
@@ -442,7 +442,7 @@ export const UNITS: Unit[] = [
         ex: ["I was dreading the eight-hour coach journey.", "I dread to think what it cost."],
         use: "Только про будущее: dread + -ing / dread the thought of. Пауков не dread, их be scared of / fear. Устойчивое: I dread to think… — страшно подумать.",
         use_en: "Only about the future: dread + -ing / dread the thought of. You don't dread spiders — you are scared of them. Set phrase: I dread to think….",
-        gap: { s: "I was ___ the eight-hour coach journey.", a: "dreading" },
+        gap: { s: "I'm ___ Monday's dentist appointment.", a: "dreading" },
       },
       {
         k: "had been pestering me", w: "pester somebody (to do)", form: "verb · past perfect continuous", ipa: "/ˈpestə/",
@@ -452,7 +452,7 @@ export const UNITS: Unit[] = [
         ex: ["The kids had been pestering me for weeks to take them to the water park.", "Stop pestering your sister."],
         use: "Past perfect continuous (had been pestering) — процесс тянулся долго ДО другого события в прошлом. Шкала: bother (мягко) → pester (настойчиво, надоедливо) → harass (серьёзно, вплоть до юридического).",
         use_en: "Past perfect continuous (had been pestering) — an activity that went on for a long time before another past event. Scale: bother (mild) → pester (persistent, annoying) → harass (serious, potentially legal).",
-        gap: { s: "The kids had been ___ me for weeks to take them to the water park.", a: "pestering" },
+        gap: { s: "Journalists kept ___ the actor for a comment.", a: "pestering" },
       },
       {
         k: "getaway", w: "getaway", form: "noun", ipa: "/ˈɡetəweɪ/",
@@ -462,7 +462,7 @@ export const UNITS: Unit[] = [
         ex: ["A weekend getaway to the coast was exactly what we needed.", "The robbers' getaway car was found abandoned."],
         use: "Слово из рекламы турфирм: a romantic / weekend / city getaway. Второе значение — криминальное: make a getaway, getaway driver. Глагол пишется раздельно: get away — сбежать, вырваться.",
         use_en: "Travel-brochure word: a romantic / weekend / city getaway. Second meaning is criminal: make a getaway, getaway driver. The verb is two words: get away.",
-        gap: { s: "A weekend ___ to the coast was exactly what we needed.", a: "getaway" },
+        gap: { s: "They booked a romantic ___ in the Lake District for their anniversary.", a: "getaway" },
       },
       {
         k: "we did have to chip in with the washing up", w: "chip in (with) / the washing up", form: "phrasal verb + emphatic did", ipa: "/tʃɪp/",
@@ -472,7 +472,7 @@ export const UNITS: Unit[] = [
         ex: ["Everyone had to chip in with the cooking.", "We all chipped in for a present. / Whose turn is it to do the washing up?"],
         use: "did have to — эмфатическое did: «пришлось-таки». chip in for (деньгами) / with (помощью) / chip in — вставить реплику. AmE: do the dishes вместо do the washing up.",
         use_en: "did have to — emphatic did: «we DID have to». chip in for (money) / with (help); also chip in = add a remark. AmE says do the dishes rather than do the washing up.",
-        gap: { s: "Everyone had to ___ in with the cooking and cleaning.", a: "chip" },
+        gap: { s: "Could you ___ in with the dishes tonight?", a: "chip" },
       },
       {
         k: "plenty", w: "plenty (of)", form: "pronoun / determiner", ipa: "/ˈplenti/",
@@ -482,7 +482,7 @@ export const UNITS: Unit[] = [
         ex: ["There was plenty of time to explore the old town.", "— More tea? — No thanks, that's plenty."],
         use: "plenty OF + существительное (и исчисляемое, и нет): plenty of time / plenty of chairs. Само по себе plenty — местоимение: That's plenty. Оттенок «хватает с запасом», в отличие от нейтрального many / much. Ловушка: plenty time ✗.",
         use_en: "plenty OF + noun (countable or not): plenty of time / plenty of chairs. Alone it is a pronoun: That's plenty. Implies «enough and more», unlike neutral many / much. Trap: plenty time ✗.",
-        gap: { s: "There was ___ of time to explore the old town.", a: "plenty" },
+        gap: { s: "Don't rush — we've got ___ of time before the gate closes.", a: "plenty" },
       },
       {
         k: "grindstone", w: "(back to) the grindstone", form: "noun · idiom", ipa: "/ˈɡraɪndstəʊn/",
@@ -492,7 +492,7 @@ export const UNITS: Unit[] = [
         ex: ["Holiday's over — back to the grindstone on Monday.", "She kept her nose to the grindstone all term."],
         use: "После отпуска: Back to the grindstone! — с усталой самоиронией. Родственное: the daily grind — рутина; grind (v) — молоть, точить; a grind — нудная тяжёлая работа.",
         use_en: "After a holiday: Back to the grindstone! — tired self-mockery. Related: the daily grind (routine); grind (v) = to mill or sharpen; a grind = tedious hard work.",
-        gap: { s: "Holiday's over — back to the ___ on Monday.", a: "grindstone" },
+        gap: { s: "The break was lovely, but it's nose to the ___ again tomorrow.", a: "grindstone" },
       },
     ],
   },
